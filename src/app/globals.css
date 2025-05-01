@@ -200,4 +200,10 @@
   --color-orange-700: var(--mantine-color-orange-7);
   --color-orange-800: var(--mantine-color-orange-8);
   --color-orange-900: var(--mantine-color-orange-9);
+
+  /* --breakpoint-xs: var(--mantine-breakpoint-xs);
+  --breakpoint-sm: var(--mantine-breakpoint-sm);
+  --breakpoint-md: var(--mantine-breakpoint-md);
+  --breakpoint-lg: var(--mantine-breakpoint-lg);
+  --breakpoint-xl: var(--mantine-breakpoint-xl); */
 }
