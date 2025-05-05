@@ -4,9 +4,9 @@ import {
   useMantineColorScheme,
   useComputedColorScheme,
   ActionIconProps,
+  ActionIcon,
 } from "@mantine/core";
 import { IconSun, IconMoon } from "@tabler/icons-react";
-import { MenuButton } from "./menu-button";
 
 // Defined in src/app/globals.css
 const GLOBAL_CSS_CLASS_DARK = "dark";
@@ -14,38 +14,35 @@ const GLOBAL_CSS_CLASS_LIGHT = "light";
 
 export type ColorSchemeToggleProps = {
   iconSize?: ActionIconProps["size"];
-  label?: string;
   stroke?: number;
 };
 
 export function ColorSchemeToggle(props: ColorSchemeToggleProps) {
-  const { iconSize, label, stroke } = props;
+  const { iconSize, stroke } = props;
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
 
   return (
-    <MenuButton
-      label={label}
+    <ActionIcon
+      variant="subtle"
+      color="gray"
       onClick={() =>
         setColorScheme(computedColorScheme === "light" ? "dark" : "light")
       }
       aria-label="color-scheme-toggle-button"
-      icon={
-        <>
-          <IconSun
-            className={GLOBAL_CSS_CLASS_LIGHT}
-            size={iconSize}
-            stroke={stroke}
-          />
-          <IconMoon
-            className={GLOBAL_CSS_CLASS_DARK}
-            size={iconSize}
-            stroke={stroke}
-          />
-        </>
-      }
-    />
+    >
+      <IconSun
+        className={GLOBAL_CSS_CLASS_LIGHT}
+        size={iconSize}
+        stroke={stroke}
+      />
+      <IconMoon
+        className={GLOBAL_CSS_CLASS_DARK}
+        size={iconSize}
+        stroke={stroke}
+      />
+    </ActionIcon>
   );
 }
