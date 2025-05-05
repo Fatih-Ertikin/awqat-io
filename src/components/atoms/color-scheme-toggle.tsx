@@ -1,48 +1,25 @@
 "use client";
 
-import {
-  useMantineColorScheme,
-  useComputedColorScheme,
-  ActionIconProps,
-  ActionIcon,
-} from "@mantine/core";
-import { IconSun, IconMoon } from "@tabler/icons-react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 
-// Defined in src/app/globals.css
-const GLOBAL_CSS_CLASS_DARK = "dark";
-const GLOBAL_CSS_CLASS_LIGHT = "light";
+export function ColorSchemeToggle() {
+  const { setTheme, theme } = useTheme();
 
-export type ColorSchemeToggleProps = {
-  iconSize?: ActionIconProps["size"];
-  stroke?: number;
-};
-
-export function ColorSchemeToggle(props: ColorSchemeToggleProps) {
-  const { iconSize, stroke } = props;
-  const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme("light", {
-    getInitialValueInEffect: true,
-  });
-
+  // toggle between light and dark mode
+  const toggleTheme = () => {
+    if (theme === "dark") {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
+  };
   return (
-    <ActionIcon
-      variant="subtle"
-      color="gray"
-      onClick={() =>
-        setColorScheme(computedColorScheme === "light" ? "dark" : "light")
-      }
-      aria-label="color-scheme-toggle-button"
-    >
-      <IconSun
-        className={GLOBAL_CSS_CLASS_LIGHT}
-        size={iconSize}
-        stroke={stroke}
-      />
-      <IconMoon
-        className={GLOBAL_CSS_CLASS_DARK}
-        size={iconSize}
-        stroke={stroke}
-      />
-    </ActionIcon>
+    <Button variant="ghost" size="icon" onClick={toggleTheme}>
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 }

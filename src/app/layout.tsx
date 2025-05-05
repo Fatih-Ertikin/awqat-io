@@ -1,16 +1,9 @@
-// Import styles of packages that you've installed.
-// All packages except `@mantine/hooks` require styles imports
-import "@mantine/core/styles.css";
 import "./globals.css";
-import {
-  ColorSchemeScript,
-  MantineProvider,
-  mantineHtmlProps,
-} from "@mantine/core";
 import type { Metadata } from "next";
 import { MobileMenu } from "@/components/molecules/mobile-menu";
 import { Anchor } from "@/components/atoms/anchor";
 import { ColorSchemeToggle } from "@/components/atoms/color-scheme-toggle";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
   title: "Awqat.io",
@@ -23,13 +16,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" {...mantineHtmlProps}>
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <ColorSchemeScript />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
-        <MantineProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <div className="flex flex-col min-h-screen">
             {/* Header */}
             <header className="w-full p-4 sticky top-0 z-50">
@@ -52,7 +49,7 @@ export default function RootLayout({
               <div className="max-w-7xl mx-auto px-4 py-6">{children}</div>
             </main>
           </div>
-        </MantineProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

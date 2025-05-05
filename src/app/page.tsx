@@ -1,11 +1,24 @@
+import { EventCard } from "@/components/molecules/event-card";
+
 export default function Home() {
   // TODO: get dynamically based on user location + time
-  const TODAY_HIJRI = "Dhuʻl-Qiʻdah 7, 1446 AH";
-  const TODAY_GREGORIAN = "Fri, April 20 2025";
+  const YEAR_HIJRI = "1446 AH";
+  const YEAR_GREGORIAN = "2025";
+
+  const MONTH_HIJRI = "Dhuʻl-Qiʻdah";
+  const MONTH_GREGORIAN = "April";
+
+  const DAY_GREGORIAN = "20";
+  const DAY_HIJRI = "7";
+
+  const DAY_OF_WEEK_HIJRI = "Jumuah";
+
+  const DAY_OF_WEEK_GREGORIAN = "Friday";
+
   const TIME = "08:30";
 
   return (
-    <div className="grid grid-rows-2 min-h-screen">
+    <div className="grid grid-rows-2 ">
       {/* Top half: split into two */}
       <div className="grid grid-cols-2">
         <div className="p-4">
@@ -19,13 +32,23 @@ export default function Home() {
           </time>
         </div>
         <div className="p-4">
-          <p className="mt-2 text-4xl">{TODAY_HIJRI}</p>
-          <p className="mt-2 text-2xl">{TODAY_GREGORIAN}</p>
+          <p className="mt-2 text-4xl font-thin">
+            {DAY_HIJRI} {MONTH_HIJRI} {YEAR_HIJRI}
+          </p>
+          <p className="mt-2 text-2xl font-thin opacity-50">
+            {DAY_OF_WEEK_GREGORIAN} {DAY_GREGORIAN} {MONTH_GREGORIAN}{" "}
+            {YEAR_GREGORIAN}
+          </p>
         </div>
       </div>
 
       {/* Bottom half: full width */}
-      <div className="bg-yellow-100 p-4">Bottom Full Width</div>
+
+      <div className="p-4 flex justify-between gap-2 overflow-x-auto sm:justify-center">
+        <EventCard title="Fajr" time="05:10" status="past" />
+        <EventCard title="Dhuhr" time="13:05" status="upcoming" />
+        <EventCard title="Asr" time="16:30" status="next" />
+      </div>
     </div>
   );
 }
