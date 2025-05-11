@@ -1,9 +1,17 @@
-import "./globals.css";
+import "@mantine/core/styles.css";
+import {
+  Box,
+  ColorSchemeScript,
+  Container,
+  Group,
+  mantineHtmlProps,
+  Title,
+} from "@mantine/core";
 import type { Metadata } from "next";
 import { MobileMenu } from "@/components/molecules/mobile-menu";
 import { Anchor } from "@/components/atoms/anchor";
 import { ColorSchemeToggle } from "@/components/atoms/color-scheme-toggle";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { MantineWithThemeProvider } from "@/components/atoms/mantine-with-theme-provider";
 
 export const metadata: Metadata = {
   title: "Awqat.io",
@@ -16,40 +24,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" {...mantineHtmlProps}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <ColorSchemeScript />
       </head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex flex-col min-h-screen">
+        <MantineWithThemeProvider>
+          <Container size="responsive">
             {/* Header */}
-            <header className="w-full p-4 sticky top-0 z-50">
-              <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-                <div className="text-2xl font-bold">Awqat.io</div>
-                <nav className="hidden md:flex space-x-6 items-center">
-                  <Anchor href="#">calculation method</Anchor>
-                  <Anchor href="#">about</Anchor>
-                  <ColorSchemeToggle />
-                </nav>
+            <header>
+              <Group justify="space-between" align="center">
+                <Title order={1}>Awqat.io</Title>
                 {/* Mobile Menu */}
-                <div className="md:hidden">
+                <Group justify="space-between" align="center" gap="xs">
                   <ColorSchemeToggle />
                   <MobileMenu />
-                </div>
-              </div>
+                </Group>
+              </Group>
             </header>
 
             <main className="flex-1">
               <div className="max-w-7xl mx-auto px-4 py-6">{children}</div>
             </main>
-          </div>
-        </ThemeProvider>
+          </Container>
+        </MantineWithThemeProvider>
       </body>
     </html>
   );

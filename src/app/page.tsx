@@ -3,13 +3,6 @@ import {
   EventCardData,
   MOCK_EVENTS,
 } from "@/components/molecules/event-card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 
 export default function Home() {
   // TODO: get dynamically based on user location + time
@@ -57,22 +50,7 @@ export default function Home() {
       {/* Bottom half: full width */}
       <div className="bg-green-400">
         <h3 className="mt-2 text-2xl mb-2">up next:</h3>
-        <div className="flex justify-center">
-          <Carousel className="w-full max-w-[270px] sm:max-w-[480px] md:max-w-[600px]">
-            <CarouselPrevious />
-            <CarouselNext />
-            <CarouselContent>
-              {events.map((event, index) => (
-                <CarouselItem
-                  key={index}
-                  className="basis-full sm:basis-1/2 md:basis-1/3"
-                >
-                  <EventCard event={event} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
+        <div className="flex justify-center"></div>
       </div>
     </div>
   );

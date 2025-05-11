@@ -1,15 +1,22 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import { ComponentProps } from "react";
+import {
+  Anchor as MantineAnchor,
+  AnchorProps as MantineAnchorProps,
+} from "@mantine/core";
 
-type AnchorProps = ComponentProps<typeof Link> & {
+type AnchorProps = {
   children: React.ReactNode;
-};
+  href: string;
+} & Omit<MantineAnchorProps, "component" | "href"> &
+  ComponentProps<typeof NextLink>;
 
 export function Anchor(props: AnchorProps) {
-  const { children, ...rest } = props;
+  const { children, href, ...rest } = props;
+
   return (
-    <Link {...rest} className="hover:text-gray-600 dark:hover:text-blue-400">
+    <MantineAnchor {...rest} component={NextLink} href={href}>
       {children}
-    </Link>
+    </MantineAnchor>
   );
 }
