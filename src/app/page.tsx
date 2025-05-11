@@ -1,4 +1,15 @@
-import { EventCard } from "@/components/molecules/event-card";
+import {
+  EventCard,
+  EventCardData,
+  MOCK_EVENTS,
+} from "@/components/molecules/event-card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export default function Home() {
   // TODO: get dynamically based on user location + time
@@ -17,37 +28,51 @@ export default function Home() {
 
   const TIME = "08:30";
 
+  const events = MOCK_EVENTS;
+
   return (
-    <div className="grid grid-rows-2 ">
-      {/* Top half: split into two */}
-      <div className="grid grid-cols-2">
-        <div className="p-4">
+    <div className="grid grid-rows-1 bg-blue-400">
+      {/* Top half: split into two cols */}
+      <div className="grid grid-cols-2 bg-red-400">
+        <div>
           <time
-            className="flex flex-col justify-center items-center text-9xl font-bold"
+            className="text-8xl font-bold"
             dateTime={TIME}
             aria-label={TIME}
           >
-            <span>{TIME.split(":")[0]}</span>
-            <span>{TIME.split(":")[1]}</span>
+            <h1>{TIME.split(":")[0]}</h1>
+            <h1>{TIME.split(":")[1]}</h1>
           </time>
         </div>
-        <div className="p-4">
-          <p className="mt-2 text-4xl font-thin">
+        <div>
+          <h2 className="text-4xl font-thin">
             {DAY_HIJRI} {MONTH_HIJRI} {YEAR_HIJRI}
-          </p>
-          <p className="mt-2 text-2xl font-thin opacity-50">
+          </h2>
+          <h2 className="text-2xl font-thin text-gray-400">
             {DAY_OF_WEEK_GREGORIAN} {DAY_GREGORIAN} {MONTH_GREGORIAN}{" "}
             {YEAR_GREGORIAN}
-          </p>
+          </h2>
         </div>
       </div>
-
       {/* Bottom half: full width */}
-
-      <div className="p-4 flex justify-between gap-2 overflow-x-auto sm:justify-center">
-        <EventCard title="Fajr" time="05:10" status="past" />
-        <EventCard title="Dhuhr" time="13:05" status="upcoming" />
-        <EventCard title="Asr" time="16:30" status="next" />
+      <div className="bg-green-400">
+        <h3 className="mt-2 text-2xl mb-2">up next:</h3>
+        <div className="flex justify-center">
+          <Carousel className="w-full max-w-[270px] sm:max-w-[480px] md:max-w-[600px]">
+            <CarouselPrevious />
+            <CarouselNext />
+            <CarouselContent>
+              {events.map((event, index) => (
+                <CarouselItem
+                  key={index}
+                  className="basis-full sm:basis-1/2 md:basis-1/3"
+                >
+                  <EventCard event={event} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
       </div>
     </div>
   );
