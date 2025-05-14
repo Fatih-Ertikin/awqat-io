@@ -2,17 +2,22 @@
 
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { Anchor } from "../atoms/anchor";
-import { ActionIcon, Drawer, Stack } from "@mantine/core";
+import { ActionIcon, Drawer, MantineColor, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-export function MobileMenu() {
+export type MobileMenuProps = {
+  iconColor?: MantineColor;
+};
+
+export function MobileMenu(props: MobileMenuProps) {
+  const { iconColor } = props;
   const [drawerIsOpen, { toggle, close }] = useDisclosure();
 
   return (
     <>
       <ActionIcon
         variant="transparent"
-        color="gray"
+        color={iconColor}
         aria-label="toggle main menu"
         onClick={toggle}
       >

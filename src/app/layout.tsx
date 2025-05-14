@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import type { Metadata } from "next";
 import { MobileMenu } from "@/components/molecules/mobile-menu";
-import { Anchor } from "@/components/atoms/anchor";
+
 import { ColorSchemeToggle } from "@/components/atoms/color-scheme-toggle";
 import { MantineWithThemeProvider } from "@/components/atoms/mantine-with-theme-provider";
 
@@ -32,20 +32,24 @@ export default function RootLayout({
       <body>
         <MantineWithThemeProvider>
           <Container size="responsive">
-            {/* Header */}
             <header>
-              <Group justify="space-between" align="center">
+              <Group justify="space-between" align="center" mb="lg">
                 <Title order={1}>Awqat.io</Title>
                 {/* Mobile Menu */}
-                <Group justify="space-between" align="center" gap="xs">
+                <Group
+                  justify="space-between"
+                  align="center"
+                  gap="xs"
+                  hiddenFrom="sm"
+                >
                   <ColorSchemeToggle />
                   <MobileMenu />
                 </Group>
               </Group>
             </header>
 
-            <main className="flex-1">
-              <div className="max-w-7xl mx-auto px-4 py-6">{children}</div>
+            <main>
+              <Box>{children}</Box>
             </main>
           </Container>
         </MantineWithThemeProvider>

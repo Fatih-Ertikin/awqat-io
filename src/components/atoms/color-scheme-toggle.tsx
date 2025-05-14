@@ -4,12 +4,18 @@ import {
   useMantineColorScheme,
   useComputedColorScheme,
   ActionIcon,
+  MantineColor,
 } from "@mantine/core";
 import cx from "clsx";
 import { Moon, Sun } from "lucide-react";
 import classes from "./color-scheme-toggle.module.css";
 
-export function ColorSchemeToggle() {
+export type ColorSchemeToggleProps = {
+  color?: MantineColor;
+};
+
+export function ColorSchemeToggle(props: ColorSchemeToggleProps) {
+  const { color } = props;
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
@@ -21,7 +27,7 @@ export function ColorSchemeToggle() {
   };
 
   return (
-    <ActionIcon onClick={toggleTheme} variant="transparent" color="gray">
+    <ActionIcon onClick={toggleTheme} variant="transparent" color={color}>
       <Sun className={cx(classes.icon, classes.light)} />
       <Moon className={cx(classes.icon, classes.dark)} />
     </ActionIcon>
