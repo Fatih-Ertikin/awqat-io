@@ -4,13 +4,14 @@ import { EventCard } from "@/components/molecules/event-card";
 import { MOCK_EVENTS } from "@/hooks/use-events";
 import { getCountryFilePath, readCountryFile } from "@/geo-names/geo-names";
 import Fuse from "fuse.js";
-import { redirect } from "next/navigation";
+
 import {
-  EN_HIJRI_LOCALE,
   getDateInTimezone,
   getHijriUnicodeLDML,
   getTimeInTimezone,
 } from "@/geo-location/datetime";
+import { getTranslations } from "next-intl/server";
+import { redirect } from "@/i18n/navigation";
 
 export default async function EventOverviewPage(props: {
   params: Promise<{
@@ -21,16 +22,17 @@ export default async function EventOverviewPage(props: {
 }) {
   const params = await props.params;
   const { country, city, locale } = params;
+  const t = await getTranslations("OverviewPage");
 
   // 1. get users country, capital, current city & timezone
-  const countryFile = getCountryFilePath(country);
+  const countryFilePath = getCountryFilePath(country);
 
-  if (!countryFile) {
+  if (!countryFilePath) {
     // TODO: what here
     throw new Error(`Country file not found for ${country}`);
   }
 
-  const cityData = await readCountryFile(countryFile);
+  const cityData = await readCountryFile(countryFilePath);
 
   // 2. get users city by fuzzy search
   const fuse = new Fuse(cityData, {
@@ -61,7 +63,10 @@ export default async function EventOverviewPage(props: {
 
     const capitalCity = capital.name.toLowerCase();
 
-    redirect(`/${country}/${capitalCity}`);
+    redirect({
+      href: `/${locale}/${country}/${capitalCity}`,
+      locale,
+    });
   }
 
   const userCity = bestMatch.item;
@@ -107,9 +112,10 @@ export default async function EventOverviewPage(props: {
             </Title>
           </Stack>
           <Select
-            label="Location"
+            label={t("select_city_label")}
             searchable
-            placeholder="Select your city"
+            placeholder={t("select_city_placeholder")}
+            nothingFoundMessage={t("select_city_nothing_found")}
             data={selectableCities}
             value={userCity.id}
           />
@@ -117,7 +123,7 @@ export default async function EventOverviewPage(props: {
       </GridCol>
       <GridCol span={12}>
         <Title order={3} mb="xs">
-          Up next:
+          {t("event_overview_title")}
         </Title>
         <Carousel withIndicators>
           {MOCK_EVENTS.map((e, i) => (

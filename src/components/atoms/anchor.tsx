@@ -1,4 +1,4 @@
-import NextLink from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ComponentProps } from "react";
 import {
   Anchor as MantineAnchor,
@@ -9,13 +9,13 @@ type AnchorProps = {
   children: React.ReactNode;
   href: string;
 } & Omit<MantineAnchorProps, "component" | "href"> &
-  ComponentProps<typeof NextLink>;
+  ComponentProps<typeof Link>;
 
 export function Anchor(props: AnchorProps) {
   const { children, href, ...rest } = props;
 
   return (
-    <MantineAnchor {...rest} component={NextLink} href={href}>
+    <MantineAnchor {...rest} component={Link} href={href}>
       {children}
     </MantineAnchor>
   );

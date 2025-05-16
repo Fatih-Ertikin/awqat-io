@@ -1,5 +1,11 @@
 {
   "Global": {
     "app_name": "Awqat.io"
+  },
+  "OverviewPage": {
+    "select_city_label": "Select a city",
+    "select_city_placeholder": "Select a city",
+    "select_city_nothing_found": "No cities found",
+    "event_overview_title": "Event Overview"
   }
 }
