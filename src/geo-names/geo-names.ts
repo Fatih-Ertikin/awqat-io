@@ -42,7 +42,7 @@ export function getCountryFilePath(countryName: string): string | null {
   return filePath;
 }
 
-type GeoNamesRow = [
+type GeoNamesFileRow = [
   id: string,
   name: string,
   asciiname: string,
@@ -119,7 +119,7 @@ export async function readCountryFile(path: string) {
       dem,
       timezone,
       modificationDate,
-    ] = row as GeoNamesRow | string[];
+    ] = row as GeoNamesFileRow | string[];
 
     // filter out non-city records
     if (
