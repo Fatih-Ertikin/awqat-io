@@ -1,87 +1,84 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Card, Group, Text, CardSection, Stack } from "@mantine/core";
+import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import duration, { Duration } from "dayjs/plugin/duration";
+import duration from "dayjs/plugin/duration";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(duration);
 
-export type EventCardData = {
+enum EventType {
+  SALAH,
+  MORNING_DHIKR,
+  EVENING_DHIKR,
+  JUMMAH_SALAH,
+  LAST_THIRD_OF_THE_NIGHT,
+}
+
+type Event = {
   title: string;
+  type: EventType;
+  description: string;
   time: {
-    start: Dayjs;
-    duration: Duration;
-    timezone: string;
+    start: Date;
+    durationMs: number;
   };
-  status: "upcoming" | "ongoing" | "completed";
 };
 
-type EventCardProps = {
-  event: EventCardData;
+const EventTypeCaptions: Record<EventType, string> = {
+  [EventType.SALAH]: "Obligatory Salah",
+  [EventType.MORNING_DHIKR]: "Morning Dhikr",
+  [EventType.EVENING_DHIKR]: "Evening Dhikr",
+  [EventType.JUMMAH_SALAH]: "Jummah Salah",
+  [EventType.LAST_THIRD_OF_THE_NIGHT]: "Last Third of the Night",
 };
 
-export const MOCK_EVENTS: EventCardData[] = [
-  {
-    title: "Event 1",
-    time: {
-      start: dayjs.tz("2023-10-01T10:00:00", "America/New_York"),
-      duration: dayjs.duration({ hours: 2, minutes: 30 }),
-      timezone: "America/New_York",
-    },
-    status: "upcoming",
-  },
-  {
-    title: "Event 2",
-    time: {
-      start: dayjs.tz("2023-10-01T12:00:00", "America/New_York"),
-      duration: dayjs.duration({ hours: 1, minutes: 15 }),
-      timezone: "America/New_York",
-    },
-    status: "ongoing",
-  },
-  {
-    title: "Event 3",
-    time: {
-      start: dayjs.tz("2023-10-01T14:00:00", "America/New_York"),
-      duration: dayjs.duration({ hours: 0, minutes: 45 }),
-      timezone: "America/New_York",
-    },
-    status: "completed",
-  },
-];
+export type EventCardProps = {
+  event: Event;
+};
 
 export function EventCard(props: EventCardProps) {
   const { event } = props;
 
-  const { title, time, status } = event;
+  const { title, time, id, description, type } = event;
 
-  const { start, duration, timezone } = time;
+  const { start, durationMs } = time;
 
-  const startTime = start.tz(timezone).format("HH:mm");
-  const endTime = start.add(duration).tz(timezone).format("HH:mm");
+  // Calculate in how many minutes the event starts
+  const now = dayjs();
+  const startTime = dayjs(start);
+  const duration = dayjs.duration(durationMs);
+  const startsIn = startTime.diff(now, "minute");
+  const startsInHours = Math.floor(startsIn / 60);
 
-  const durationString = `${duration.hours()}h ${duration.minutes()}m`;
+  const startsInLabel =
+    startsIn > 60 ? `In ${startsInHours} hours` : `In ${startsIn} minutes`;
 
   return (
-    <div className="flex flex-col gap-2 p-4 bg-white rounded-lg shadow-md">
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-sm text-gray-500">
-        {status === "upcoming" && (
-          <span className="text-green-500">Upcoming</span>
-        )}
-        {status === "ongoing" && (
-          <span className="text-yellow-500">Ongoing</span>
-        )}
-        {status === "completed" && (
-          <span className="text-gray-500">Completed</span>
-        )}
-      </p>
-      <p className="text-sm text-gray-500">
-        {startTime} - {endTime}
-      </p>
-      <p className="text-sm text-gray-500">Duration: {durationString}</p>
-      <p className="text-sm text-gray-500">Timezone: {timezone}</p>
-    </div>
+    <Card withBorder shadow="sm" radius="md">
+      <CardSection inheritPadding py="xs">
+        <Stack gap="xs">
+          <Group justify="space-between">
+            <Text fw={500}>{title}</Text>
+            <Text fw={500}>{startsInLabel}</Text>
+          </Group>
+          <Text size="sm" c="dimmed">
+            {EventTypeCaptions[type]}
+          </Text>
+        </Stack>
+      </CardSection>
+
+      <Text mt="sm" c="dimmed" size="sm">
+        since last visit, review them to select which one should be added to
+        your gallery
+      </Text>
+
+      <CardSection inheritPadding mt="sm">
+        helo
+      </CardSection>
+
+      <CardSection inheritPadding mt="sm" pb="md"></CardSection>
+    </Card>
   );
 }

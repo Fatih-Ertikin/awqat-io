@@ -1,7 +1,7 @@
 "use client";
 
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { Anchor } from "../atoms/anchor";
+import { Anchor } from "@/components/atoms/anchor";
 import { ActionIcon, Drawer, MantineColor, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 

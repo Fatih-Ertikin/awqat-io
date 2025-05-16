@@ -1,10 +1,10 @@
 "use client";
 
-import { useLocalizedSystemTime } from "@/hooks/use-localized-system-time";
+import { useLocalizedDateTime } from "@/hooks/use-localized-datetime";
 import { Stack, Title } from "@mantine/core";
 
-export function LocalizedTime() {
-  const { hijri, system } = useLocalizedSystemTime();
+export function LocalizedDate() {
+  const { hijri, browser: system } = useLocalizedDateTime();
 
   return (
     <Stack gap="xs">
