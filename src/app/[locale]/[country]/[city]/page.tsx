@@ -6,21 +6,21 @@ import { getCountryFilePath, readCountryFile } from "@/geo-names/geo-names";
 import Fuse from "fuse.js";
 import { redirect } from "next/navigation";
 import {
-  AR_HIJRI_LOCALE,
   EN_HIJRI_LOCALE,
-  FALLBACK_LOCALE,
   getDateInTimezone,
+  getHijriUnicodeLDML,
   getTimeInTimezone,
 } from "@/geo-location/datetime";
 
 export default async function EventOverviewPage(props: {
   params: Promise<{
+    locale: string;
     country: string;
     city: string;
   }>;
 }) {
   const params = await props.params;
-  const { country, city } = params;
+  const { country, city, locale } = params;
 
   // 1. get users country, capital, current city & timezone
   const countryFile = getCountryFilePath(country);
@@ -73,11 +73,14 @@ export default async function EventOverviewPage(props: {
 
   // 3. calculate events for today based on the users timezone & date
 
-  const userDateHijri = getDateInTimezone(userCity.timezone, EN_HIJRI_LOCALE);
+  const userDateHijri = getDateInTimezone(
+    userCity.timezone,
+    getHijriUnicodeLDML(locale, locale)
+  );
 
-  const userDateLocal = getDateInTimezone(userCity.timezone, FALLBACK_LOCALE); // TODO: use the users locale
+  const userDateLocal = getDateInTimezone(userCity.timezone, locale);
 
-  const userTime = getTimeInTimezone(userCity.timezone, FALLBACK_LOCALE);
+  const userTime = getTimeInTimezone(userCity.timezone, locale);
 
   return (
     <Grid>

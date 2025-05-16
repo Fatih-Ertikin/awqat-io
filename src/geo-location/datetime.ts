@@ -1,10 +1,4 @@
 /**
- * english fallback locale for date formatting
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_the_default_locale
- */
-export const FALLBACK_LOCALE = "en-US" as const;
-
-/**
  * english hjiri locale for date formatting
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_the_default_locale
  */
@@ -16,6 +10,12 @@ export const EN_HIJRI_LOCALE = "en-SA-u-ca-islamic-umalqura" as const; // Hijri 
  */
 export const AR_HIJRI_LOCALE = "ar-SA-u-ca-islamic-umalqura" as const; // Hijri locale for Arabic
 
+export function getHijriUnicodeLDML(
+  locale: string,
+  region: string
+): Intl.LocalesArgument {
+  return `${locale}-${region}-u-ca-islamic-umalqura` as Intl.LocalesArgument;
+}
 /**
  * Get the current date and time in a specific timezone
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
