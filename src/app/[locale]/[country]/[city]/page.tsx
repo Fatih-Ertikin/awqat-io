@@ -2,8 +2,12 @@ import { Carousel, CarouselSlide } from "@mantine/carousel";
 import { Grid, GridCol, Select, Stack, Title } from "@mantine/core";
 import { EventCard } from "@/components/molecules/event-card";
 import { MOCK_EVENTS } from "@/hooks/use-events";
-import { getCountryFilePath, readCountryFile } from "@/geo-names/geo-names";
-import Fuse from "fuse.js";
+import {
+  findCapital,
+  fuzzySearchByName,
+  getCountryFilePath,
+  readCountryFile,
+} from "@/geo-names/geo-names";
 
 import {
   getDateInTimezone,
@@ -32,29 +36,16 @@ export default async function EventOverviewPage(props: {
     throw new Error(`Country file not found for ${country}`);
   }
 
-  const cityData = await readCountryFile(countryFilePath);
+  const cityData = await readCountryFile(countryFilePath, {
+    citiesOnly: true,
+    minPopulation: 15000,
+  });
 
   // 2. get users city by fuzzy search
-  const fuse = new Fuse(cityData, {
-    threshold: 0.1,
-    keys: ["name", "asciiname", "alternatenames"],
-    includeScore: true,
-  });
+  const match = fuzzySearchByName(city, cityData);
 
-  const result = fuse.search(city);
-
-  // 3. get the best match for the city
-  const sortedByScore = result.sort((a, b) => {
-    if (a.score && b.score) {
-      return a.score - b.score;
-    }
-    return 0;
-  });
-
-  const bestMatch = sortedByScore[0];
-
-  if (!bestMatch) {
-    const capital = cityData.find((c) => c.featureCode === "PPLC");
+  if (!match) {
+    const capital = findCapital(cityData);
 
     if (!capital) {
       // TODO: what here
@@ -67,9 +58,10 @@ export default async function EventOverviewPage(props: {
       href: `/${locale}/${country}/${capitalCity}`,
       locale,
     });
+    return;
   }
 
-  const userCity = bestMatch.item;
+  const userCity = match;
 
   const selectableCities = cityData.map((c) => ({
     value: c.id,

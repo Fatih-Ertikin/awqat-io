@@ -1,23 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import countries from "i18n-iso-countries";
 import path from "node:path";
 import fs from "node:fs";
 import { parse as csvParse } from "csv-parse";
+import Fuse from "fuse.js";
+import {
+  CITY_FEATURE_CLASSES,
+  CITY_FEATURE_CODES,
+  GeoNamesFileRow,
+  GeoNamesFilterOptions,
+  GeoNamesRecord,
+} from "./types";
 
 const GEONAME_FILES_DIR = "src/geo-names/files";
-
-const FEATURE_CODE_WHITELIST = new Set([
-  "PPL",
-  "PPLA",
-  "PPLA2",
-  "PPLA3",
-  "PPLC",
-  "PPLG",
-  "PPLL",
-  "PPLS",
-  "PPLX",
-]);
-const FEATURE_CLASS_WHITELIST = new Set(["P", "A"]);
 
 /**
  * returnes the path of the geoName file for a given country
@@ -42,51 +36,10 @@ export function getCountryFilePath(countryName: string): string | null {
   return filePath;
 }
 
-type GeoNamesFileRow = [
-  id: string,
-  name: string,
-  asciiname: string,
-  alternatenames: string,
-  lat: string,
-  lng: string,
-  featureClass: string,
-  featureCode: string,
-  countryCode: string,
-  cc2: string,
-  admin1: string,
-  admin2: string,
-  admin3: string,
-  admin4: string,
-  population: string,
-  elevation: string,
-  dem: string,
-  timezone: string,
-  modificationDate: string
-];
-
-type GeoNamesRecord = {
-  id: string;
-  name: string;
-  asciiname: string;
-  alternatenames: string;
-  lat: string;
-  lng: string;
-  featureClass: string;
-  featureCode: string;
-  countryCode: string;
-  cc2: string;
-  admin1: string;
-  admin2: string;
-  admin3: string;
-  admin4: string;
-  population: string;
-  elevation: string;
-  dem: string;
-  timezone: string;
-  modificationDate: string;
-};
-
-export async function readCountryFile(path: string) {
+export async function readCountryFile(
+  path: string,
+  options?: GeoNamesFilterOptions
+) {
   const content = fs.readFileSync(path, "utf8");
 
   const records = csvParse(content, {
@@ -121,12 +74,21 @@ export async function readCountryFile(path: string) {
       modificationDate,
     ] = row as GeoNamesFileRow | string[];
 
-    // filter out non-city records
-    if (
-      !FEATURE_CLASS_WHITELIST.has(featureClass) ||
-      !FEATURE_CODE_WHITELIST.has(featureCode)
-    ) {
-      continue;
+    if (options?.minPopulation) {
+      const populationNumber = parseInt(population, 10);
+
+      if (isNaN(populationNumber) || populationNumber < options.minPopulation) {
+        continue;
+      }
+    }
+
+    if (options?.citiesOnly) {
+      if (
+        !CITY_FEATURE_CLASSES.has(featureClass) ||
+        !CITY_FEATURE_CODES.has(featureCode)
+      ) {
+        continue;
+      }
     }
 
     results.push({
@@ -153,4 +115,39 @@ export async function readCountryFile(path: string) {
   }
 
   return results;
+}
+
+export function fuzzySearchByName(
+  input: string,
+  records: GeoNamesRecord[]
+): GeoNamesRecord | null {
+  const fuse = new Fuse(records, {
+    threshold: 0.1,
+    keys: ["name", "asciiname", "alternatenames"],
+    includeScore: true,
+  });
+
+  const result = fuse.search(input);
+
+  // 3. get the best match for the city
+  const sortedByScore = result.sort((a, b) => {
+    if (a.score && b.score) {
+      return a.score - b.score;
+    }
+    return 0;
+  });
+
+  const bestMatch = sortedByScore[0];
+
+  if (!bestMatch) {
+    return null;
+  }
+
+  return bestMatch.item;
+}
+
+export function findCapital(records: GeoNamesRecord[]): GeoNamesRecord | null {
+  const capital = records.find((c) => c.featureCode === "PPLC");
+
+  return capital || null;
 }
