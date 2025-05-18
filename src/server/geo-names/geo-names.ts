@@ -1,3 +1,5 @@
+"server-only";
+
 import countries from "i18n-iso-countries";
 import path from "node:path";
 import fs from "node:fs";
@@ -11,7 +13,7 @@ import {
   GeoNamesRecord,
 } from "./types";
 
-const GEONAME_FILES_DIR = "src/geo-names/files";
+const GEONAME_FILES_DIR = "src/server/geo-names/files";
 
 /**
  * returnes the path of the geoName file for a given country
@@ -117,7 +119,7 @@ export async function readCountryFile(
   return results;
 }
 
-export function fuzzySearchByName(
+export function fuzzySearchCityByName(
   input: string,
   records: GeoNamesRecord[]
 ): GeoNamesRecord | null {

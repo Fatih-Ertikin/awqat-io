@@ -4,10 +4,10 @@ import { EventCard } from "@/components/molecules/event-card";
 import { MOCK_EVENTS } from "@/hooks/use-events";
 import {
   findCapital,
-  fuzzySearchByName,
+  fuzzySearchCityByName,
   getCountryFilePath,
   readCountryFile,
-} from "@/geo-names/geo-names";
+} from "@/server/geo-names/geo-names";
 
 import {
   getDateInTimezone,
@@ -42,7 +42,7 @@ export default async function EventOverviewPage(props: {
   });
 
   // 2. get users city by fuzzy search
-  const match = fuzzySearchByName(city, cityData);
+  const match = fuzzySearchCityByName(city, cityData);
 
   if (!match) {
     const capital = findCapital(cityData);
