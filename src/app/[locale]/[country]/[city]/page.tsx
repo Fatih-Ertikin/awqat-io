@@ -1,7 +1,4 @@
-import { Carousel, CarouselSlide } from "@mantine/carousel";
-import { Grid, GridCol, Select, Stack, Title } from "@mantine/core";
-import { EventCard } from "@/components/molecules/event-card";
-import { MOCK_EVENTS } from "@/hooks/use-events";
+import { Stack, Title, Text, List, ListItem } from "@mantine/core";
 import {
   findCapital,
   fuzzySearchCityByName,
@@ -9,13 +6,9 @@ import {
   readCountryFile,
 } from "@/server/geo-names/geo-names";
 
-import {
-  getDateInTimezone,
-  getHijriUnicodeLDML,
-  getTimeInTimezone,
-} from "@/geo-location/datetime";
-import { getTranslations } from "next-intl/server";
+import { getFormatter, getNow, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
+import { notFound } from "next/navigation";
 
 export default async function EventOverviewPage(props: {
   params: Promise<{
@@ -24,107 +17,94 @@ export default async function EventOverviewPage(props: {
     city: string;
   }>;
 }) {
+  const format = await getFormatter();
+  const serverDateTime = await getNow();
+
   const params = await props.params;
   const { country, city, locale } = params;
-  const t = await getTranslations("OverviewPage");
+
+  const translate = await getTranslations("OverviewPage");
+
+  const countriesTranslations = await getTranslations("Countries");
 
   // 1. get users country, capital, current city & timezone
-  const countryFilePath = getCountryFilePath(country);
+  const countryDataFilePath = getCountryFilePath(country);
 
-  if (!countryFilePath) {
-    // TODO: what here
-    throw new Error(`Country file not found for ${country}`);
+  if (!countryDataFilePath) {
+    notFound();
   }
 
-  const cityData = await readCountryFile(countryFilePath, {
+  const countryCities = await readCountryFile(countryDataFilePath, {
     citiesOnly: true,
     minPopulation: 15000,
   });
 
   // 2. get users city by fuzzy search
-  const match = fuzzySearchCityByName(city, cityData);
+  const matchedCity = fuzzySearchCityByName(city, countryCities);
 
-  if (!match) {
-    const capital = findCapital(cityData);
+  if (!matchedCity) {
+    const capital = findCapital(countryCities);
 
     if (!capital) {
-      // TODO: what here
-      throw new Error(`No capital found for ${country}`);
+      notFound();
     }
 
     const capitalCity = capital.name.toLowerCase();
 
-    redirect({
-      href: `/${locale}/${country}/${capitalCity}`,
+    return redirect({
+      href: `/${country}/${capitalCity}`,
       locale,
     });
-    return;
   }
 
-  const userCity = match;
+  // const selectableCities = countryCities.map((c) => ({
+  //   value: c.id,
+  //   label: c.name.toLowerCase(),
+  // }));
 
-  const selectableCities = cityData.map((c) => ({
-    value: c.id,
-    label: c.name.toLowerCase(),
-  }));
+  // TODO: calculate events for today based on the users timezone & date
 
-  // 3. calculate events for today based on the users timezone & date
-
-  const userDateHijri = getDateInTimezone(
-    userCity.timezone,
-    getHijriUnicodeLDML(locale, locale)
-  );
-
-  const userDateLocal = getDateInTimezone(userCity.timezone, locale);
-
-  const userTime = getTimeInTimezone(userCity.timezone, locale);
+  // Convert the server date to the requested city's timezone
+  const cityDateTime = format.dateTime(serverDateTime, {
+    timeZone: matchedCity.timezone,
+  });
 
   return (
-    <Grid>
-      <GridCol span={6} ta="center">
-        <time dateTime={userTime} aria-label={userTime}>
-          <Stack gap="xs">
-            <Title order={1} fz={125} lh={1}>
-              {userTime.split(":")[0]}
-            </Title>
-            <Title order={1} fz={125} lh={1}>
-              {userTime.split(":")[1]}
-            </Title>
-          </Stack>
-        </time>
-      </GridCol>
-      <GridCol span={6} mt="xs">
-        <Stack>
-          <Stack gap="xs">
-            <Title order={2} fw="lighter" lineClamp={2}>
-              {userDateHijri}
-            </Title>
-            <Title order={3} fz="sm" fw="lighter" lineClamp={2}>
-              {userDateLocal}
-            </Title>
-          </Stack>
-          <Select
-            label={t("select_city_label")}
-            searchable
-            placeholder={t("select_city_placeholder")}
-            nothingFoundMessage={t("select_city_nothing_found")}
-            data={selectableCities}
-            value={userCity.id}
-          />
-        </Stack>
-      </GridCol>
-      <GridCol span={12}>
-        <Title order={3} mb="xs">
-          {t("event_overview_title")}
-        </Title>
-        <Carousel withIndicators>
-          {MOCK_EVENTS.map((e, i) => (
-            <CarouselSlide key={`event-${i}-${e.title}`}>
-              <EventCard event={e} />
-            </CarouselSlide>
-          ))}
-        </Carousel>
-      </GridCol>
-    </Grid>
+    <Stack>
+      <Title order={1}>
+        {translate("title", {
+          city: city,
+          country: countriesTranslations(country),
+          date: cityDateTime,
+        })}
+      </Title>
+      <Text>{translate("Description.text")}</Text>
+      <List>
+        <ListItem>
+          {translate("Description.List.morning_evening_dhikr")}
+        </ListItem>
+        <ListItem>{translate("Description.List.last_hour_of_friday")}</ListItem>
+        <ListItem>{translate("Description.List.last_third_of_night")}</ListItem>
+        <ListItem>{translate("Description.List.and_more")}</ListItem>
+      </List>
+
+      <Title order={2}>{translate("PrayerTimes.title")}</Title>
+
+      <Title order={3}>{translate("PrayerTimes.Fajr.prayer_name")}</Title>
+      <Text>
+        {translate("PrayerTimes.Fajr.time", {
+          time: format.dateTime(new Date(), {
+            timeZone: matchedCity.timezone,
+            minute: "2-digit",
+            hour: "2-digit",
+          }),
+        })}
+      </Text>
+
+      <Title order={3}>{translate("PrayerTimes.Dhuhr.prayer_name")}</Title>
+      <Title order={3}>{translate("PrayerTimes.Asr.prayer_name")}</Title>
+      <Title order={3}>{translate("PrayerTimes.Maghrib.prayer_name")}</Title>
+      <Title order={3}>{translate("PrayerTimes.Isha.prayer_name")}</Title>
+    </Stack>
   );
 }

@@ -7,7 +7,7 @@ import { useNow, useFormatter, DateTimeFormatOptions } from "next-intl";
 type DefaultElementType = HTMLSpanElement;
 const defaultElement = "span" as const;
 
-interface FormattedDateProps
+interface FormattedDateTimeProps
   extends Omit<
     React.HTMLAttributes<DefaultElementType>,
     "children" | "suppressHydrationWarning"
@@ -25,10 +25,10 @@ interface FormattedDateProps
   formatOptions?: DateTimeFormatOptions;
 }
 
-const Ref: ForwardRefRenderFunction<DefaultElementType, FormattedDateProps> = (
-  props: FormattedDateProps,
-  ref: ForwardedRef<DefaultElementType>
-) => {
+const Ref: ForwardRefRenderFunction<
+  DefaultElementType,
+  FormattedDateTimeProps
+> = (props: FormattedDateTimeProps, ref: ForwardedRef<DefaultElementType>) => {
   const { date, formatOptions, ...rest } = props;
 
   const now = useNow();
@@ -63,7 +63,7 @@ const Ref: ForwardRefRenderFunction<DefaultElementType, FormattedDateProps> = (
   );
 };
 
-export const FormattedDate = createPolymorphicComponent<
+export const FormattedDateTime = createPolymorphicComponent<
   "span",
-  FormattedDateProps
+  FormattedDateTimeProps
 >(Ref);

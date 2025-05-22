@@ -1,5 +1,48 @@
 {
   "Global": {
     "app_name": "Awqat.io"
+  },
+  "OverviewPage": {
+    "title": "Islamitische gebeds & belangrijke tijden voor {city}, {country} - {date}",
+    "Description": {
+      "text": "Hier vind je de dagelijkse gebedstijden & andere data die een belangrijke status hebben in de Islam. Zoals de tijden van:",
+      "List": {
+        "morning_evening_dhikr": "De ochtend- en avond dhikr",
+        "last_hour_of_friday": "Het laatste uur van de vrijdag",
+        "last_third_of_night": "Het laatste derde deel van de nacht",
+        "and_more": "en meer"
+      }
+    },
+    "PrayerTimes": {
+      "title": "Gebedstijden",
+      "Fajr": {
+        "prayer_name": "Fajr",
+        "time": "De tijd van Fajr vandaag is om {time}."
+      },
+      "Dhuhr": {
+        "prayer_name": "Dhuhr",
+        "time": "De tijd van dhuhr vandaag is om {time}."
+      },
+      "Asr": {
+        "prayer_name": "Asr",
+        "time": "De tijd van asr vandaag is om {time}."
+      },
+      "Maghrib": {
+        "prayer_name": "Maghrib",
+        "time": "De tijd van maghrib vandaag is om {time}."
+      },
+      "Isha": {
+        "prayer_name": "Isha",
+        "time": "De tijd van isha vandaag is om {time}."
+      }
+    },
+    "CitySelector": {
+      "label": "Selecteer een stad",
+      "placeholder": "Selecteer een stad",
+      "nothing_found": "Geen steden gevonden"
+    }
+  },
+  "Countries": {
+    "netherlands": "Nederland"
   }
 }
