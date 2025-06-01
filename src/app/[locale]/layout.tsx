@@ -66,6 +66,18 @@ export default async function RootLayout({
                     <ColorSchemeToggle />
                     <MobileMenu />
                   </Group>
+
+                  {/* Desktop Menu */}
+                  <Group
+                    justify="space-between"
+                    align="center"
+                    gap="xs"
+                    visibleFrom="sm"
+                  >
+                    <LocaleSelect />
+                    <ColorSchemeToggle />
+                    <MobileMenu />
+                  </Group>
                 </Group>
               </header>
 
