@@ -1,0 +1,68 @@
+{
+  "Global": {
+    "app_name": "Awqat.io"
+  },
+  "Components": {
+    "GeoLocationRequest": {
+      "btn_label": "Zoek dichtsbijzijnde locatie",
+      "error_permission_denied_title": "Browser locatie toestemming vereist",
+      "error_permission_denied_description": "Geef toestemming in je browser om je locatie te delen, zodat we de gebedstijden voor jouw locatie kunnen tonen.",
+      "error_position_unavailable_title": "Locatie niet beschikbaar",
+      "error_position_unavailable_description": "We konden je locatie niet bepalen. Probeer het opnieuw of zoek handmatig naar jouw locatie.",
+      "error_timeout_title": "Timeout bij het ophalen van locatie",
+      "error_timeout_description": "Het ophalen van je locatie heeft te lang geduurd. Probeer het opnieuw of zoek handmatig naar jouw locatie.",
+      "error_unknown_title": "Onbekende fout",
+      "error_unknown_description": "Er is een onbekende fout opgetreden bij het ophalen van je locatie. Probeer het opnieuw of zoek handmatig naar jouw locatie."
+    },
+    "LocationSelectionForm": {
+      "country_select_label": "1. Selecteer een land",
+      "country_select_placeholder": "Kies een land",
+      "city_select_label": "2. Selecteer een stad",
+      "city_select_placeholder": "Kies een stad",
+      "city_select_placeholder_no_country": "Selecteer eerst een land",
+      "submit_button_label": "Zoek"
+    }
+  },
+  "Pages": {
+    "HomePage": {
+      "title": "Vind Islamitische gebeds & belangrijke tijden bij jou in de buurt",
+      "divider_label": "of",
+      "search_manually_title": "Zoek handmatig naar jouw locatie"
+    },
+    "PrayerTimesPage": {
+      "title": "Islamitische gebeds & belangrijke tijden voor {city}, {country} - {date}",
+      "Description": {
+        "text": "Hier vind je de dagelijkse gebedstijden & andere data die een belangrijke status hebben in de Islam. Zoals de tijden van:",
+        "List": {
+          "morning_evening_dhikr": "De ochtend- en avond dhikr",
+          "last_hour_of_friday": "Het laatste uur van de vrijdag",
+          "last_third_of_night": "Het laatste derde deel van de nacht",
+          "and_more": "en meer"
+        }
+      },
+      "PrayerTimes": {
+        "title": "Gebedstijden",
+        "Fajr": {
+          "prayer_name": "Fajr",
+          "time": "De tijd van Fajr vandaag is om {time}."
+        },
+        "Dhuhr": {
+          "prayer_name": "Dhuhr",
+          "time": "De tijd van dhuhr vandaag is om {time}."
+        },
+        "Asr": {
+          "prayer_name": "Asr",
+          "time": "De tijd van asr vandaag is om {time}."
+        },
+        "Maghrib": {
+          "prayer_name": "Maghrib",
+          "time": "De tijd van maghrib vandaag is om {time}."
+        },
+        "Isha": {
+          "prayer_name": "Isha",
+          "time": "De tijd van isha vandaag is om {time}."
+        }
+      }
+    }
+  }
+}

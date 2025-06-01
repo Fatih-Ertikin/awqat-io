@@ -1,0 +1,12 @@
+.responsiveContainer {
+  max-width: 100%;
+
+  @media (min-width: em(36em)) {
+    max-width: 36em;
+    background-color: var(--mantine-color-blue-0);
+  }
+
+  @media (min-width: em(600px)) {
+    max-width: 600px;
+  }
+}

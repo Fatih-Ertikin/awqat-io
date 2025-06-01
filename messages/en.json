@@ -1,0 +1,68 @@
+{
+  "Global": {
+    "app_name": "Awqat.io"
+  },
+  "Components": {
+    "GeoLocationRequest": {
+      "btn_label": "Search nearest location",
+      "error_permission_denied_title": "Browser location permission required",
+      "error_permission_denied_description": "Please allow location access in your browser to share your location, so we can show you prayer times for your location.",
+      "error_position_unavailable_title": "Location not available",
+      "error_position_unavailable_description": "We could not determine your location. Please try again or search manually for your location.",
+      "error_timeout_title": "Timeout while fetching location",
+      "error_timeout_description": "Fetching your location took too long. Please try again or search manually for your location.",
+      "error_unknown_title": "Unknown error",
+      "error_unknown_description": "An unknown error occurred while fetching your location. Please try again or search manually for your location."
+    },
+    "LocationSelectionForm": {
+      "country_select_label": "1. Select a country",
+      "country_select_placeholder": "Choose a country",
+      "city_select_label": "2. Select a city",
+      "city_select_placeholder": "Choose a city",
+      "city_select_placeholder_no_country": "Select a country first",
+      "submit_button_label": "Search"
+    }
+  },
+  "Pages": {
+    "HomePage": {
+      "title": "Find Islamic prayer & important times near you",
+      "divider_label": "or",
+      "search_manually_title": "Search manually for your location"
+    },
+    "PrayerTimesPage": {
+      "title": " Islamic prayer & important times for {city}, {country} - {date}",
+      "Description": {
+        "text": "Here you will find the daily prayer times & other dates that hold significant status in Islam. Such as the times for:",
+        "List": {
+          "morning_evening_dhikr": "Morning and evening dhikr",
+          "last_hour_of_friday": "The last hour of Friday",
+          "last_third_of_night": "The last third of the night",
+          "and_more": "and more"
+        }
+      },
+      "PrayerTimes": {
+        "title": "Prayer Times",
+        "Fajr": {
+          "prayer_name": "Fajr",
+          "time": "The time for Fajr today is at {time}."
+        },
+        "Dhuhr": {
+          "prayer_name": "Dhuhr",
+          "time": "The time for Dhuhr today is at {time}."
+        },
+        "Asr": {
+          "prayer_name": "Asr",
+          "time": "The time for Asr today is at {time}."
+        },
+        "Maghrib": {
+          "prayer_name": "Maghrib",
+          "time": "The time for Maghrib today is at {time}."
+        },
+        "Isha": {
+          "prayer_name": "Isha",
+          "time": "The time for Isha today is at {time}."
+        }
+      }
+    }
+  }
+}
