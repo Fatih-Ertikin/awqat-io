@@ -1,8 +1,8 @@
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { Anchor } from "../atoms/anchor";
 
-export async function MenuItems() {
-  const t = await getTranslations("Global.Menu");
+export function MenuItems() {
+  const t = useTranslations("Global.Menu");
 
   return (
     <>
