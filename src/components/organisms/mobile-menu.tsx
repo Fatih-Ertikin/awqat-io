@@ -3,7 +3,8 @@
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { ActionIcon, Drawer, MantineColor, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { MenuItems } from "../molecules/menu-items";
+import { Anchor } from "../atoms/anchor";
+import { useTranslations } from "next-intl";
 
 export type MobileMenuProps = {
   iconColor?: MantineColor;
@@ -13,6 +14,7 @@ export type MobileMenuProps = {
 export function MobileMenu(props: MobileMenuProps) {
   const { iconColor = "gray", iconStrokeWidth = 1.75 } = props;
   const [drawerIsOpen, { toggle, close }] = useDisclosure();
+  const t = useTranslations("Global.Menu");
 
   return (
     <>
@@ -38,7 +40,15 @@ export function MobileMenu(props: MobileMenuProps) {
         }}
       >
         <Stack>
-          <MenuItems />
+          <Anchor href="/" onClick={close}>
+            {t("home")}
+          </Anchor>
+          <Anchor href="/calculation-method" onClick={close}>
+            {t("calculation_method")}
+          </Anchor>
+          <Anchor href="/about" onClick={close}>
+            {t("about")}
+          </Anchor>
         </Stack>
       </Drawer>
     </>

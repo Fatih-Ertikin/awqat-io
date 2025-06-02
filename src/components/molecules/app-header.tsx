@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { ColorSchemeToggle } from "../atoms/color-scheme-toggle";
 import { LocaleSelect } from "../atoms/locale-select";
 import { MobileMenu } from "../organisms/mobile-menu";
-import { MenuItems } from "./menu-items";
+import { Anchor } from "../atoms/anchor";
 
 export async function AppHeader() {
   const t = await getTranslations("Global");
@@ -14,7 +14,11 @@ export async function AppHeader() {
 
       {/* Desktop Menu */}
       <Group justify="space-between" gap="xl" visibleFrom="sm">
-        <MenuItems />
+        <Anchor href="/">{t("Menu.home")}</Anchor>
+        <Anchor href="/calculation-method">
+          {t("Menu.calculation_method")}
+        </Anchor>
+        <Anchor href="/about">{t("Menu.about")}</Anchor>
         <Group gap="xs">
           <ColorSchemeToggle />
           <LocaleSelect />
