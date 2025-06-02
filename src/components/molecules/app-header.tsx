@@ -22,7 +22,7 @@ export async function AppHeader() {
       </Group>
 
       {/* Mobile Menu */}
-      <Group justify="space-between" gap="xs" hiddenFrom="sm" bg="purple">
+      <Group justify="space-between" gap="xs" hiddenFrom="sm">
         <ColorSchemeToggle />
         <LocaleSelect />
         <MobileMenu />
