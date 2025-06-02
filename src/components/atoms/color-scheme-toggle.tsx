@@ -1,35 +1,32 @@
 "use client";
 
-import {
-  useMantineColorScheme,
-  useComputedColorScheme,
-  ActionIcon,
-  MantineColor,
-} from "@mantine/core";
-import cx from "clsx";
-import { Moon, Sun } from "lucide-react";
-import classes from "./color-scheme-toggle.module.css";
+import { useMantineColorScheme, Switch } from "@mantine/core";
+import { IconMoonStars, IconSun } from "@tabler/icons-react";
 
-export type ColorSchemeToggleProps = {
-  color?: MantineColor;
-};
-
-export function ColorSchemeToggle(props: ColorSchemeToggleProps) {
-  const { color } = props;
-  const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme("light", {
-    getInitialValueInEffect: true,
+export function ColorSchemeToggle() {
+  const {
+    // see: https://mantine.dev/theming/color-schemes/#color-scheme-value-caveats
+    toggleColorScheme,
+  } = useMantineColorScheme({
+    keepTransitions: true, // keep animations ongoing when toggling between color schemes
   });
 
-  // toggle between light and dark mode
-  const toggleTheme = () => {
-    setColorScheme(computedColorScheme === "light" ? "dark" : "light");
-  };
-
   return (
-    <ActionIcon onClick={toggleTheme} variant="transparent" color={color}>
-      <Sun className={cx(classes.icon, classes.light)} />
-      <Moon className={cx(classes.icon, classes.dark)} />
-    </ActionIcon>
+    <Switch
+      onChange={toggleColorScheme}
+      aria-label="Toggle color scheme"
+      size="lg"
+      withThumbIndicator={false}
+      onLabel={
+        <IconSun size={18} stroke={2} color="var(--mantine-color-yellow-4)" />
+      }
+      offLabel={
+        <IconMoonStars
+          size={18}
+          stroke={2}
+          color="var(--mantine-color-blue-6)"
+        />
+      }
+    />
   );
 }
