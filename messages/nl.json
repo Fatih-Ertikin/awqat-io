@@ -1,6 +1,11 @@
 {
   "Global": {
-    "app_name": "Awqat.io"
+    "app_name": "Awqat.io",
+    "Menu": {
+      "home": "Start",
+      "calculation_method": "Berekeningsmethoden",
+      "about": "Over ons"
+    }
   },
   "Components": {
     "GeoLocationRequest": {
@@ -20,7 +25,9 @@
       "city_select_label": "2. Selecteer een stad",
       "city_select_placeholder": "Kies een stad",
       "city_select_placeholder_no_country": "Selecteer eerst een land",
-      "submit_button_label": "Zoek"
+      "submit_button_label": "Zoek",
+      "error_fetching_cities_title": "Fout bij het ophalen van steden",
+      "error_fetching_cities_message": "We konden de lijst met steden niet ophalen. Probeer het later opnieuw."
     }
   },
   "Pages": {
@@ -31,15 +38,6 @@
     },
     "PrayerTimesPage": {
       "title": "Islamitische gebeds & belangrijke tijden voor {city}, {country} - {date}",
-      "Description": {
-        "text": "Hier vind je de dagelijkse gebedstijden & andere data die een belangrijke status hebben in de Islam. Zoals de tijden van:",
-        "List": {
-          "morning_evening_dhikr": "De ochtend- en avond dhikr",
-          "last_hour_of_friday": "Het laatste uur van de vrijdag",
-          "last_third_of_night": "Het laatste derde deel van de nacht",
-          "and_more": "en meer"
-        }
-      },
       "PrayerTimes": {
         "title": "Gebedstijden",
         "Fajr": {

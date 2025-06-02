@@ -1,10 +1,15 @@
 {
   "Global": {
-    "app_name": "Awqat.io"
+    "app_name": "Awqat.io",
+    "Menu": {
+      "home": "Home",
+      "calculation_method": "Calculation Methods",
+      "about": "About"
+    }
   },
   "Components": {
     "GeoLocationRequest": {
-      "btn_label": "Search nearest location",
+      "btn_label": "Auto-detect nearest location",
       "error_permission_denied_title": "Browser location permission required",
       "error_permission_denied_description": "Please allow location access in your browser to share your location, so we can show you prayer times for your location.",
       "error_position_unavailable_title": "Location not available",
@@ -20,26 +25,19 @@
       "city_select_label": "2. Select a city",
       "city_select_placeholder": "Choose a city",
       "city_select_placeholder_no_country": "Select a country first",
-      "submit_button_label": "Search"
+      "submit_button_label": "Get prayer times",
+      "error_fetching_cities_title": "Error fetching countries",
+      "error_fetching_cities_message": "We could not fetch the list of countries. Please try again later."
     }
   },
   "Pages": {
     "HomePage": {
-      "title": "Find Islamic prayer & important times near you",
+      "title": "Find Salah times near you",
       "divider_label": "or",
       "search_manually_title": "Search manually for your location"
     },
     "PrayerTimesPage": {
       "title": " Islamic prayer & important times for {city}, {country} - {date}",
-      "Description": {
-        "text": "Here you will find the daily prayer times & other dates that hold significant status in Islam. Such as the times for:",
-        "List": {
-          "morning_evening_dhikr": "Morning and evening dhikr",
-          "last_hour_of_friday": "The last hour of Friday",
-          "last_third_of_night": "The last third of the night",
-          "and_more": "and more"
-        }
-      },
       "PrayerTimes": {
         "title": "Prayer Times",
         "Fajr": {
