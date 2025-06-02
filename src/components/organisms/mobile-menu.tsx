@@ -1,16 +1,17 @@
 "use client";
 
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { Anchor } from "@/components/atoms/anchor";
 import { ActionIcon, Drawer, MantineColor, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { MenuItems } from "../molecules/menu-items";
 
 export type MobileMenuProps = {
   iconColor?: MantineColor;
+  iconStrokeWidth?: number;
 };
 
 export function MobileMenu(props: MobileMenuProps) {
-  const { iconColor } = props;
+  const { iconColor = "gray", iconStrokeWidth = 1.75 } = props;
   const [drawerIsOpen, { toggle, close }] = useDisclosure();
 
   return (
@@ -21,7 +22,11 @@ export function MobileMenu(props: MobileMenuProps) {
         aria-label="toggle main menu"
         onClick={toggle}
       >
-        {drawerIsOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
+        {drawerIsOpen ? (
+          <IconX strokeWidth={iconStrokeWidth} />
+        ) : (
+          <IconMenu2 strokeWidth={iconStrokeWidth} />
+        )}
       </ActionIcon>
 
       <Drawer
@@ -33,15 +38,7 @@ export function MobileMenu(props: MobileMenuProps) {
         }}
       >
         <Stack>
-          <Anchor href="/" onClick={close}>
-            Home
-          </Anchor>
-          <Anchor href="/calculation-method" onClick={close}>
-            Calculation method
-          </Anchor>
-          <Anchor href="/about" onClick={close}>
-            About
-          </Anchor>
+          <MenuItems />
         </Stack>
       </Drawer>
     </>
