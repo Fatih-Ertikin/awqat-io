@@ -1,4 +1,4 @@
-import { GeoLocationRequestButton } from "@/components/molecules/geo-location-request-button";
+import { GeoLocationRequestButton } from "@/components/atoms/geo-location-request-button";
 import { LocationSelectionForm } from "@/components/organisms/location-selection-form";
 import { redirect } from "@/i18n/navigation";
 import {
@@ -6,8 +6,7 @@ import {
   findCountryCitiesBySlug,
 } from "@/server/mongo/countries/countries.collection";
 import { findNearestGeoData } from "@/server/mongo/geospatial/geospatial.collection";
-
-import { Divider, Stack, Text, Title } from "@mantine/core";
+import { Center, Divider, Stack, Text, Title } from "@mantine/core";
 import { getTranslations } from "next-intl/server";
 
 export default async function Home(props: {
@@ -53,24 +52,28 @@ export default async function Home(props: {
   };
 
   return (
-    <Stack>
-      <Title order={1}>{translate("title")}</Title>
-      <GeoLocationRequestButton onConfirm={handleGeoLocationConfirm} />
-      <Divider
-        label={
-          <Text size="lg" c="dimmed">
-            {translate("divider_label")}
-          </Text>
-        }
-      />
-      <Title order={2}>{translate("search_manually_title")}</Title>
-      <LocationSelectionForm
-        countries={countries.map((country) => ({
-          slug: country.slug,
-          localizedName: country.names[locale] || country.fallbackName,
-        }))}
-        getCountryCities={getCountryCities}
-      />
-    </Stack>
+    <Center>
+      <Stack maw="400px">
+        <Title order={1} ta="center" px="xl">
+          {translate("title")}
+        </Title>
+        <GeoLocationRequestButton onConfirm={handleGeoLocationConfirm} />
+        <Divider
+          label={
+            <Text size="lg" c="dimmed">
+              {translate("divider_label")}
+            </Text>
+          }
+        />
+        <Title order={2}>{translate("search_manually_title")}</Title>
+        <LocationSelectionForm
+          countries={countries.map((country) => ({
+            slug: country.slug,
+            localizedName: country.names[locale] || country.fallbackName,
+          }))}
+          getCountryCities={getCountryCities}
+        />
+      </Stack>
+    </Center>
   );
 }

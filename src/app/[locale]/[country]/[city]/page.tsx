@@ -1,4 +1,4 @@
-import { Stack, Title, Text, List, ListItem } from "@mantine/core";
+import { Stack, Title, Text } from "@mantine/core";
 import { getFormatter, getNow, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
@@ -53,15 +53,6 @@ export default async function EventOverviewPage(props: {
           date: formattedCityDateTime,
         })}
       </Title>
-      <Text>{translate("Description.text")}</Text>
-      <List>
-        <ListItem>
-          {translate("Description.List.morning_evening_dhikr")}
-        </ListItem>
-        <ListItem>{translate("Description.List.last_hour_of_friday")}</ListItem>
-        <ListItem>{translate("Description.List.last_third_of_night")}</ListItem>
-        <ListItem>{translate("Description.List.and_more")}</ListItem>
-      </List>
 
       <Title order={2}>{translate("PrayerTimes.title")}</Title>
 
@@ -69,7 +60,7 @@ export default async function EventOverviewPage(props: {
       <Text>
         {translate("PrayerTimes.Fajr.time", {
           time: format.dateTime(new Date(), {
-            // timeZone: matchedCity.timezone,
+            timeZone: city.timeZone,
             minute: "2-digit",
             hour: "2-digit",
           }),
@@ -80,7 +71,7 @@ export default async function EventOverviewPage(props: {
       <Text>
         {translate("PrayerTimes.Dhuhr.time", {
           time: format.dateTime(new Date(), {
-            // timeZone: matchedCity.timezone,
+            timeZone: city.timeZone,
             minute: "2-digit",
             hour: "2-digit",
           }),
@@ -91,7 +82,7 @@ export default async function EventOverviewPage(props: {
       <Text>
         {translate("PrayerTimes.Asr.time", {
           time: format.dateTime(new Date(), {
-            // timeZone: matchedCity.timezone,
+            timeZone: city.timeZone,
             minute: "2-digit",
             hour: "2-digit",
           }),
@@ -102,7 +93,7 @@ export default async function EventOverviewPage(props: {
       <Text>
         {translate("PrayerTimes.Maghrib.time", {
           time: format.dateTime(new Date(), {
-            // timeZone: matchedCity.timezone,
+            timeZone: city.timeZone,
             minute: "2-digit",
             hour: "2-digit",
           }),
@@ -113,7 +104,7 @@ export default async function EventOverviewPage(props: {
       <Text>
         {translate("PrayerTimes.Isha.time", {
           time: format.dateTime(new Date(), {
-            // timeZone: matchedCity.timezone,
+            timeZone: city.timeZone,
             minute: "2-digit",
             hour: "2-digit",
           }),

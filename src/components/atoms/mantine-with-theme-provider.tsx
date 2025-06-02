@@ -1,10 +1,11 @@
 "use client";
 
-import { Container, createTheme, MantineProvider } from "@mantine/core";
+import { Container, createTheme, MantineProvider, Select } from "@mantine/core";
 import classes from "./mantine-with-theme-provider.module.css";
 import cx from "clsx";
 
 import { Poppins } from "next/font/google";
+import { ChevronDown } from "lucide-react";
 
 const poppins = Poppins({
   subsets: ["latin-ext", "latin"],
@@ -19,6 +20,11 @@ const theme = createTheme({
       classNames: (_, { size }) => ({
         root: cx({ [classes.responsiveContainer]: size === "responsive" }),
       }),
+    }),
+    Select: Select.extend({
+      defaultProps: {
+        rightSection: <ChevronDown />,
+      },
     }),
   },
 });

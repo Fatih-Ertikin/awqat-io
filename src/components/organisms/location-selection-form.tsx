@@ -1,9 +1,11 @@
 "use client";
 
 import { useRouter } from "@/i18n/navigation";
-import { Button, Select } from "@mantine/core";
+import { Button, Loader, Select } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { Building2, ChevronDown, Globe, MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 type CountrySelectOption = {
   /**
@@ -46,21 +48,33 @@ export function LocationSelectionForm(props: LocationSelectionFormProps) {
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
   const [cities, setCities] = useState<CitySelectOption[]>([]);
+  const [loadingCities, setLoadingCities] = useState(false);
 
-  const handleSelectCountry = async (value: string | null) => {
-    if (!value) {
+  const handleCountryChange = useCallback(
+    async (value: string | null) => {
+      setSelectedCountry(value);
       setSelectedCity(null);
-      return;
-    }
-    // 1. set state
-    setSelectedCountry(value);
+      setCities([]);
+      setLoadingCities(true);
 
-    // 2. fetch the cities for the selected country via server action
-    const cities = await getCountryCities(value);
+      if (value) {
+        try {
+          const fetchedCities = await getCountryCities(value);
+          setCities(fetchedCities);
+        } catch (error) {
+          console.error("Failed to fetch cities:", error);
+          notifications.show({
+            title: translate("error_fetching_cities_title"),
+            message: translate("error_fetching_cities_message"),
+            color: "red",
+          });
+        }
+      }
 
-    // 3. set the cities state
-    setCities(cities);
-  };
+      setLoadingCities(false);
+    },
+    [getCountryCities, translate]
+  );
 
   const handleSubmit = async () => {
     if (!selectedCountry || !selectedCity) {
@@ -77,7 +91,7 @@ export function LocationSelectionForm(props: LocationSelectionFormProps) {
     <>
       <Select
         value={selectedCountry}
-        onChange={handleSelectCountry}
+        onChange={handleCountryChange}
         label={translate("country_select_label")}
         placeholder={translate("country_select_placeholder")}
         data={countries.map((country) => ({
@@ -85,6 +99,7 @@ export function LocationSelectionForm(props: LocationSelectionFormProps) {
           label: country.localizedName,
         }))}
         searchable
+        leftSection={<Globe size={18} />}
       />
       <Select
         value={selectedCity}
@@ -95,14 +110,24 @@ export function LocationSelectionForm(props: LocationSelectionFormProps) {
             ? translate("city_select_placeholder")
             : translate("city_select_placeholder_no_country")
         }
-        disabled={!selectedCountry || cities.length === 0}
         data={cities.map((city) => ({
           value: city.slug,
           label: city.localizedName,
         }))}
         searchable
+        disabled={!selectedCountry}
+        rightSection={loadingCities ? <Loader size={18} /> : <ChevronDown />}
+        leftSection={<Building2 size={18} />}
       />
-      <Button onClick={handleSubmit}>{translate("submit_button_label")}</Button>
+
+      <Button
+        variant="outline"
+        color="gray"
+        rightSection={<MoveRight />}
+        onClick={handleSubmit}
+      >
+        {translate("submit_button_label")}
+      </Button>
     </>
   );
 }
