@@ -5,7 +5,7 @@ import classes from "./mantine-with-theme-provider.module.css";
 import cx from "clsx";
 
 import { Poppins } from "next/font/google";
-import { ChevronDown } from "lucide-react";
+import { IconChevronDown } from "@tabler/icons-react";
 
 const poppins = Poppins({
   subsets: ["latin-ext", "latin"],
@@ -23,7 +23,7 @@ const theme = createTheme({
     }),
     Select: Select.extend({
       defaultProps: {
-        rightSection: <ChevronDown />,
+        rightSection: <IconChevronDown />,
       },
     }),
   },

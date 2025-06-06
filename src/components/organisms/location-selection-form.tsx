@@ -3,7 +3,12 @@
 import { useRouter } from "@/i18n/navigation";
 import { Button, Loader, Select } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { Building2, ChevronDown, Globe, MoveRight } from "lucide-react";
+import {
+  IconArrowRight,
+  IconBuildings,
+  IconChevronDown,
+  IconWorld,
+} from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 
@@ -99,7 +104,7 @@ export function LocationSelectionForm(props: LocationSelectionFormProps) {
           label: country.localizedName,
         }))}
         searchable
-        leftSection={<Globe size={18} />}
+        leftSection={<IconWorld size={18} />}
       />
       <Select
         value={selectedCity}
@@ -116,14 +121,16 @@ export function LocationSelectionForm(props: LocationSelectionFormProps) {
         }))}
         searchable
         disabled={!selectedCountry}
-        rightSection={loadingCities ? <Loader size={18} /> : <ChevronDown />}
-        leftSection={<Building2 size={18} />}
+        rightSection={
+          loadingCities ? <Loader size={18} /> : <IconChevronDown />
+        }
+        leftSection={<IconBuildings size={18} />}
       />
 
       <Button
         variant="outline"
         color="gray"
-        rightSection={<MoveRight />}
+        rightSection={<IconArrowRight />}
         onClick={handleSubmit}
       >
         {translate("submit_button_label")}

@@ -5,7 +5,7 @@ import { Combobox, InputBase, useCombobox } from "@mantine/core";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import { routing, SUPPORTED_APP_LOCALES } from "@/i18n/routing";
-import { ChevronDown } from "lucide-react";
+import { IconChevronDown } from "@tabler/icons-react";
 
 type SupportedAppLocale = (typeof SUPPORTED_APP_LOCALES)[number];
 
@@ -87,7 +87,7 @@ export function LocaleSelect() {
           component="button"
           type="button"
           pointer
-          rightSection={<ChevronDown size={16} />}
+          rightSection={<IconChevronDown size={16} />}
           rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
           disabled={isPending}

@@ -3,7 +3,8 @@
 import { useGeoLocation } from "@/hooks/use-geo-location";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { MapPin } from "lucide-react";
+import { IconMapPin } from "@tabler/icons-react";
+
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -58,7 +59,7 @@ export function GeoLocationRequestButton(props: GeoLocationRequestProps) {
   return (
     <Button
       radius="xl"
-      leftSection={<MapPin size={24} />}
+      leftSection={<IconMapPin size={24} />}
       disabled={isDisabled}
       onClick={requestLocation}
     >
