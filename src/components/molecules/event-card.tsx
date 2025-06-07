@@ -22,10 +22,13 @@ export function EventCard(props: EventCardProps) {
 
   const isPassed = now > (end ?? start);
 
-  const textColor = isPassed ? "dimmed" : undefined;
-
   return (
-    <Card p="lg" radius="lg" c={textColor}>
+    <Card
+      p="lg"
+      radius="lg"
+      c={isPassed ? "dimmed" : undefined}
+      withBorder={isOngoing}
+    >
       <CardSection ta="end" h="1.5rem">
         {isOngoing && (
           <Badge
