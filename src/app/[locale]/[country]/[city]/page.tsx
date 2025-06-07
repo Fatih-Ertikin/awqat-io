@@ -1,4 +1,4 @@
-import { Stack, Title, Grid, GridCol, Box } from "@mantine/core";
+import { Title, Grid, GridCol, Box, Divider } from "@mantine/core";
 import { getFormatter, getNow } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
@@ -92,6 +92,7 @@ export default async function EventOverviewPage(props: {
       </GridCol>
 
       <GridCol span={12}>
+        <Divider my="lg" />
         <EventCarousel />
       </GridCol>
     </Grid>
