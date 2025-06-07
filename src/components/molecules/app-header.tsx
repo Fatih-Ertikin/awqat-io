@@ -9,8 +9,10 @@ export async function AppHeader() {
   const t = await getTranslations("Global");
 
   return (
-    <Group justify="space-between" mb="xl">
-      <Title order={1}>{t("app_name")}</Title>
+    <Group justify="space-between" mb="xl" wrap="nowrap">
+      <Anchor href="/" underline="never" color={undefined}>
+        <Title order={1}>{t("app_name")}</Title>
+      </Anchor>
 
       {/* Desktop Menu */}
       <Group justify="space-between" gap="xl" visibleFrom="sm">
@@ -26,7 +28,7 @@ export async function AppHeader() {
       </Group>
 
       {/* Mobile Menu */}
-      <Group justify="space-between" gap="xs" hiddenFrom="sm">
+      <Group justify="space-between" gap="xs" hiddenFrom="sm" wrap="nowrap">
         <ColorSchemeToggle />
         <LocaleSelect />
         <MobileMenu />
