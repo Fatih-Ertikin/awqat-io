@@ -11,7 +11,7 @@ export function Clock() {
   const format = useFormatter();
 
   return (
-    <Title order={1} fw="normal">
+    <Title order={1} fw="normal" suppressHydrationWarning>
       {format.dateTime(now, {
         timeStyle: "medium",
       })}
