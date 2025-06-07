@@ -3,8 +3,9 @@
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { ActionIcon, Drawer, MantineColor, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Anchor } from "../atoms/anchor";
+
 import { useTranslations } from "next-intl";
+import { ButtonAnchor } from "../atoms/button-anchor";
 
 export type MobileMenuProps = {
   iconColor?: MantineColor;
@@ -40,15 +41,15 @@ export function MobileMenu(props: MobileMenuProps) {
         }}
       >
         <Stack>
-          <Anchor href="/" onClick={close}>
+          <ButtonAnchor href="/" onClick={close}>
             {t("home")}
-          </Anchor>
-          <Anchor href="/calculation-method" onClick={close}>
+          </ButtonAnchor>
+          <ButtonAnchor href="/calculation-method" onClick={close}>
             {t("calculation_method")}
-          </Anchor>
-          <Anchor href="/about" onClick={close}>
+          </ButtonAnchor>
+          <ButtonAnchor href="/about" onClick={close}>
             {t("about")}
-          </Anchor>
+          </ButtonAnchor>
         </Stack>
       </Drawer>
     </>

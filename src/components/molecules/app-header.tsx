@@ -4,6 +4,7 @@ import { ColorSchemeToggle } from "../atoms/color-scheme-toggle";
 import { LocaleSelect } from "../atoms/locale-select";
 import { MobileMenu } from "../organisms/mobile-menu";
 import { Anchor } from "../atoms/anchor";
+import { ButtonAnchor } from "../atoms/button-anchor";
 
 export async function AppHeader() {
   const t = await getTranslations("Global");
@@ -16,11 +17,11 @@ export async function AppHeader() {
 
       {/* Desktop Menu */}
       <Group justify="space-between" gap="xl" visibleFrom="sm">
-        <Anchor href="/">{t("Menu.home")}</Anchor>
-        <Anchor href="/calculation-method">
+        <ButtonAnchor href="/">{t("Menu.home")}</ButtonAnchor>
+        <ButtonAnchor href="/calculation-method">
           {t("Menu.calculation_method")}
-        </Anchor>
-        <Anchor href="/about">{t("Menu.about")}</Anchor>
+        </ButtonAnchor>
+        <ButtonAnchor href="/about">{t("Menu.about")}</ButtonAnchor>
         <Group gap="xs">
           <ColorSchemeToggle />
           <LocaleSelect />
