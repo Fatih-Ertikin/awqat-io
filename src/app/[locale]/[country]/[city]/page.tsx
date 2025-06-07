@@ -40,34 +40,33 @@ export default async function EventOverviewPage(props: {
   const locale = params.locale;
 
   return (
-    <Grid>
+    <Grid align="center">
       <GridCol
         span={{
           base: 12,
           sm: 4,
         }}
+        ta="start"
       >
-        <Stack gap={0}>
-          <Title order={1} fw="normal">
-            {city.names[locale] || city.fallbackName},
-          </Title>
-          <Title order={1} fw="normal">
-            {country.names[locale] || country.fallbackName}
-          </Title>
-          <Title order={2}>
-            {format.dateTime(now, {
-              timeZone: city.timeZone,
-              dateStyle: "long",
-              calendar: "islamic",
-            })}
-          </Title>
-          <Title order={3} fw="lighter">
-            {format.dateTime(now, {
-              timeZone: city.timeZone,
-              dateStyle: "medium",
-            })}
-          </Title>
-        </Stack>
+        <Title order={1} fw="normal">
+          {city.names[locale] || city.fallbackName},
+        </Title>
+        <Title order={1} fw="normal">
+          {country.names[locale] || country.fallbackName}
+        </Title>
+        <Title order={2}>
+          {format.dateTime(now, {
+            timeZone: city.timeZone,
+            dateStyle: "long",
+            calendar: "islamic",
+          })}
+        </Title>
+        <Title order={3} fw="lighter">
+          {format.dateTime(now, {
+            timeZone: city.timeZone,
+            dateStyle: "medium",
+          })}
+        </Title>
       </GridCol>
 
       <GridCol

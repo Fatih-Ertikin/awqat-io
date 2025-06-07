@@ -6,6 +6,7 @@ import {
   Anchor as MantineAnchor,
   AnchorProps as MantineAnchorProps,
 } from "@mantine/core";
+import classes from "./anchor.module.css";
 
 type AnchorProps = {
   children: React.ReactNode;
@@ -17,8 +18,25 @@ export function Anchor(props: AnchorProps) {
   const { children, href, ...rest } = props;
 
   return (
-    <MantineAnchor {...rest} component={Link} href={href}>
-      {children}
-    </MantineAnchor>
+    <>
+      <MantineAnchor
+        {...rest}
+        component={Link}
+        href={href}
+        c="dark"
+        className={classes.dark}
+      >
+        {children}
+      </MantineAnchor>
+      <MantineAnchor
+        {...rest}
+        component={Link}
+        href={href}
+        c="gray.0"
+        className={classes.light}
+      >
+        {children}
+      </MantineAnchor>
+    </>
   );
 }
