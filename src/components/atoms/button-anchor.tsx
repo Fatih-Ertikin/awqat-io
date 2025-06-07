@@ -1,26 +1,25 @@
 "use client";
 
-import { Button, ButtonProps } from "@mantine/core";
 import { Link } from "@/i18n/navigation";
+import { ComponentProps } from "react";
+import { Button, ButtonProps } from "@mantine/core";
 
-type ButtonAnchorProps = {
-  href: string;
-  children?: React.ReactNode;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-} & Omit<ButtonProps, "href" | "component">;
+export type ButtonAnchorProps = Omit<ButtonProps, "component" | "href"> &
+  ComponentProps<typeof Link>;
 
 export function ButtonAnchor(props: ButtonAnchorProps) {
-  const { href, children, ...rest } = props;
+  const { children, href, ...rest } = props;
 
   return (
     <Button
-      variant="outline"
-      color="light"
+      variant="subtle"
+      color="gray"
+      c="text"
       radius="md"
-      {...rest}
-      href={href}
-      component={Link}
       fw="normal"
+      {...rest}
+      component={Link}
+      href={href}
     >
       {children}
     </Button>

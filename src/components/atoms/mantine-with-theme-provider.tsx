@@ -1,6 +1,12 @@
 "use client";
 
-import { Container, createTheme, MantineProvider, Select } from "@mantine/core";
+import {
+  Container,
+  createTheme,
+  MantineProvider,
+  Select,
+  virtualColor,
+} from "@mantine/core";
 import classes from "./mantine-with-theme-provider.module.css";
 import cx from "clsx";
 
@@ -15,6 +21,13 @@ const poppins = Poppins({
 const theme = createTheme({
   fontFamily: poppins.style.fontFamily,
   headings: { fontFamily: poppins.style.fontFamily },
+  colors: {
+    text: virtualColor({
+      name: "text",
+      light: "dark",
+      dark: "gray.0",
+    }),
+  },
   components: {
     Container: Container.extend({
       classNames: (_, { size }) => ({

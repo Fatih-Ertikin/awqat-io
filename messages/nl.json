@@ -1,7 +1,7 @@
 {
   "Global": {
     "app_name": "Awqat.io",
-    "Menu": {
+    "Routes": {
       "home": "Start",
       "calculation_method": "Berekeningsmethoden",
       "about": "Over ons"

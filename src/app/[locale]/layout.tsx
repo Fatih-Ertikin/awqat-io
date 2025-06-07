@@ -3,6 +3,7 @@ import "@mantine/carousel/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/carousel/styles.css";
+import "@/app/global.css";
 import {
   Box,
   ColorSchemeScript,

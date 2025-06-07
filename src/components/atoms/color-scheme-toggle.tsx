@@ -17,6 +17,7 @@ export function ColorSchemeToggle() {
       aria-label="Toggle color scheme"
       size="lg"
       withThumbIndicator={false}
+      color="gray"
       onLabel={
         <IconSun size={18} stroke={2} color="var(--mantine-color-yellow-4)" />
       }
@@ -24,7 +25,7 @@ export function ColorSchemeToggle() {
         <IconMoonStars
           size={18}
           stroke={2}
-          color="var(--mantine-color-blue-6)"
+          color="var(--mantine-color-indigo-6)"
         />
       }
     />

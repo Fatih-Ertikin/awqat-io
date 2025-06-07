@@ -1,38 +1,74 @@
-import { Group, Title } from "@mantine/core";
-import { getTranslations } from "next-intl/server";
+"use client";
+
+import { ActionIcon, Anchor, Drawer, Group, Stack, Title } from "@mantine/core";
 import { ColorSchemeToggle } from "../atoms/color-scheme-toggle";
 import { LocaleSelect } from "../atoms/locale-select";
-import { MobileMenu } from "../organisms/mobile-menu";
-import { Anchor } from "../atoms/anchor";
+import { useDisclosure } from "@mantine/hooks";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ButtonAnchor } from "../atoms/button-anchor";
+import { IconX, IconMenu2 } from "@tabler/icons-react";
 
-export async function AppHeader() {
-  const t = await getTranslations("Global");
+export function AppHeader() {
+  const [drawerIsOpen, { toggle, close }] = useDisclosure();
+  const translate = useTranslations("Global");
+
+  const renderRoutes = () => {
+    return (
+      <>
+        <ButtonAnchor onClick={close} href="/">
+          {translate("Routes.home")}
+        </ButtonAnchor>
+        <ButtonAnchor onClick={close} href="/calculation-method">
+          {translate("Routes.calculation_method")}
+        </ButtonAnchor>
+        <ButtonAnchor onClick={close} href="/about">
+          {translate("Routes.about")}
+        </ButtonAnchor>
+      </>
+    );
+  };
 
   return (
     <Group justify="space-between" mb="xl" wrap="nowrap">
-      <Anchor href="/" underline="never" color={undefined}>
-        <Title order={1}>{t("app_name")}</Title>
+      <Anchor component={Link} href="/" underline="never" c="text">
+        <Title order={1} fw={200}>
+          {translate("app_name")}
+        </Title>
       </Anchor>
 
-      {/* Desktop Menu */}
+      {/* Desktop Header */}
       <Group justify="space-between" gap="xl" visibleFrom="sm">
-        <ButtonAnchor href="/">{t("Menu.home")}</ButtonAnchor>
-        <ButtonAnchor href="/calculation-method">
-          {t("Menu.calculation_method")}
-        </ButtonAnchor>
-        <ButtonAnchor href="/about">{t("Menu.about")}</ButtonAnchor>
+        {renderRoutes()}
         <Group gap="xs">
           <ColorSchemeToggle />
           <LocaleSelect />
         </Group>
       </Group>
 
-      {/* Mobile Menu */}
+      {/* Mobile Header + Burger Menu */}
       <Group justify="space-between" gap="xs" hiddenFrom="sm" wrap="nowrap">
         <ColorSchemeToggle />
         <LocaleSelect />
-        <MobileMenu />
+        <ActionIcon
+          variant="transparent"
+          c="text"
+          aria-label="toggle main menu"
+          onClick={toggle}
+        >
+          {drawerIsOpen ? <IconX /> : <IconMenu2 />}
+        </ActionIcon>
+
+        <Drawer
+          opened={drawerIsOpen}
+          position="right"
+          onClose={close}
+          closeButtonProps={{
+            icon: <IconX />,
+          }}
+        >
+          <Stack>{renderRoutes()}</Stack>
+        </Drawer>
       </Group>
     </Group>
   );
