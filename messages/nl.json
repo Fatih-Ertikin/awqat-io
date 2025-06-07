@@ -28,6 +28,10 @@
       "submit_button_label": "Zoek",
       "error_fetching_cities_title": "Fout bij het ophalen van steden",
       "error_fetching_cities_message": "We konden de lijst met steden niet ophalen. Probeer het later opnieuw."
+    },
+    "EventCarousel": {
+      "next_btn_label": "Volgende",
+      "prev_btn_label": "Terug"
     }
   },
   "Pages": {
@@ -35,32 +39,6 @@
       "title": "Vind Islamitische gebeds & belangrijke tijden bij jou in de buurt",
       "divider_label": "of",
       "search_manually_title": "Zoek handmatig naar jouw locatie"
-    },
-    "PrayerTimesPage": {
-      "title": "Islamitische gebeds & belangrijke tijden voor {city}, {country} - {date}",
-      "PrayerTimes": {
-        "title": "Gebedstijden",
-        "Fajr": {
-          "prayer_name": "Fajr",
-          "time": "De tijd van Fajr vandaag is om {time}."
-        },
-        "Dhuhr": {
-          "prayer_name": "Dhuhr",
-          "time": "De tijd van dhuhr vandaag is om {time}."
-        },
-        "Asr": {
-          "prayer_name": "Asr",
-          "time": "De tijd van asr vandaag is om {time}."
-        },
-        "Maghrib": {
-          "prayer_name": "Maghrib",
-          "time": "De tijd van maghrib vandaag is om {time}."
-        },
-        "Isha": {
-          "prayer_name": "Isha",
-          "time": "De tijd van isha vandaag is om {time}."
-        }
-      }
     }
   }
 }

@@ -1,9 +1,11 @@
-import { Stack, Title, Text } from "@mantine/core";
-import { getFormatter, getNow, getTranslations } from "next-intl/server";
+import { Stack, Title, Grid, GridCol, Box } from "@mantine/core";
+import { getFormatter, getNow } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { matchSlugs } from "@/server/mongo/countries/countries.collection";
 import { getSlug } from "@/utils/slugs";
+import { EventCarousel } from "@/components/molecules/event-carousel";
+import { Clock } from "@/components/atoms/clock";
 
 export default async function EventOverviewPage(props: {
   params: Promise<{
@@ -12,12 +14,7 @@ export default async function EventOverviewPage(props: {
     city: string;
   }>;
 }) {
-  const format = await getFormatter();
-  const serverDateTime = await getNow();
-
   const params = await props.params;
-
-  const translate = await getTranslations("Pages.PrayerTimesPage");
 
   // 1. use slug parameters to find the country and city
   const match = await matchSlugs(getSlug(params.country), getSlug(params.city));
@@ -36,80 +33,68 @@ export default async function EventOverviewPage(props: {
     });
   }
 
+  const format = await getFormatter();
+  const now = await getNow();
+
   const { country, city } = match;
   const locale = params.locale;
 
-  // Convert the server date to the requested city's timezone
-  const formattedCityDateTime = format.dateTime(serverDateTime, {
-    timeZone: city.timeZone,
-  });
-
   return (
-    <Stack>
-      <Title order={1}>
-        {translate("title", {
-          city: city.names[locale] || city.fallbackName,
-          country: country.names[locale] || country.fallbackName,
-          date: formattedCityDateTime,
-        })}
-      </Title>
+    <Grid>
+      <GridCol
+        span={{
+          base: 12,
+          sm: 4,
+        }}
+      >
+        <Stack gap={0}>
+          <Title order={1} fw="normal">
+            {city.names[locale] || city.fallbackName},
+          </Title>
+          <Title order={1} fw="normal">
+            {country.names[locale] || country.fallbackName}
+          </Title>
+          <Title order={2}>
+            {format.dateTime(now, {
+              timeZone: city.timeZone,
+              dateStyle: "long",
+              calendar: "islamic",
+            })}
+          </Title>
+          <Title order={3} fw="lighter">
+            {format.dateTime(now, {
+              timeZone: city.timeZone,
+              dateStyle: "medium",
+            })}
+          </Title>
+        </Stack>
+      </GridCol>
 
-      <Title order={2}>{translate("PrayerTimes.title")}</Title>
+      <GridCol
+        span={{
+          base: 12,
+          sm: 4,
+        }}
+        visibleFrom="sm"
+        ta="center"
+      >
+        <Clock />
+      </GridCol>
 
-      <Title order={3}>{translate("PrayerTimes.Fajr.prayer_name")}</Title>
-      <Text>
-        {translate("PrayerTimes.Fajr.time", {
-          time: format.dateTime(new Date(), {
-            timeZone: city.timeZone,
-            minute: "2-digit",
-            hour: "2-digit",
-          }),
-        })}
-      </Text>
+      <GridCol
+        span={{
+          base: 12,
+          sm: 4,
+        }}
+        visibleFrom="sm"
+        ta="end"
+      >
+        <Box>TODO: something here</Box>
+      </GridCol>
 
-      <Title order={3}>{translate("PrayerTimes.Dhuhr.prayer_name")}</Title>
-      <Text>
-        {translate("PrayerTimes.Dhuhr.time", {
-          time: format.dateTime(new Date(), {
-            timeZone: city.timeZone,
-            minute: "2-digit",
-            hour: "2-digit",
-          }),
-        })}
-      </Text>
-
-      <Title order={3}>{translate("PrayerTimes.Asr.prayer_name")}</Title>
-      <Text>
-        {translate("PrayerTimes.Asr.time", {
-          time: format.dateTime(new Date(), {
-            timeZone: city.timeZone,
-            minute: "2-digit",
-            hour: "2-digit",
-          }),
-        })}
-      </Text>
-
-      <Title order={3}>{translate("PrayerTimes.Maghrib.prayer_name")}</Title>
-      <Text>
-        {translate("PrayerTimes.Maghrib.time", {
-          time: format.dateTime(new Date(), {
-            timeZone: city.timeZone,
-            minute: "2-digit",
-            hour: "2-digit",
-          }),
-        })}
-      </Text>
-
-      <Title order={3}>{translate("PrayerTimes.Isha.prayer_name")}</Title>
-      <Text>
-        {translate("PrayerTimes.Isha.time", {
-          time: format.dateTime(new Date(), {
-            timeZone: city.timeZone,
-            minute: "2-digit",
-            hour: "2-digit",
-          }),
-        })}
-      </Text>
-    </Stack>
+      <GridCol span={12}>
+        <EventCarousel />
+      </GridCol>
+    </Grid>
   );
 }

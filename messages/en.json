@@ -28,6 +28,10 @@
       "submit_button_label": "Get prayer times",
       "error_fetching_cities_title": "Error fetching countries",
       "error_fetching_cities_message": "We could not fetch the list of countries. Please try again later."
+    },
+    "EventCarousel": {
+      "next_btn_label": "Next",
+      "prev_btn_label": "Back"
     }
   },
   "Pages": {
@@ -35,32 +39,6 @@
       "title": "Find Salah times near you",
       "divider_label": "or",
       "search_manually_title": "Search manually for your location"
-    },
-    "PrayerTimesPage": {
-      "title": " Islamic prayer & important times for {city}, {country} - {date}",
-      "PrayerTimes": {
-        "title": "Prayer Times",
-        "Fajr": {
-          "prayer_name": "Fajr",
-          "time": "The time for Fajr today is at {time}."
-        },
-        "Dhuhr": {
-          "prayer_name": "Dhuhr",
-          "time": "The time for Dhuhr today is at {time}."
-        },
-        "Asr": {
-          "prayer_name": "Asr",
-          "time": "The time for Asr today is at {time}."
-        },
-        "Maghrib": {
-          "prayer_name": "Maghrib",
-          "time": "The time for Maghrib today is at {time}."
-        },
-        "Isha": {
-          "prayer_name": "Isha",
-          "time": "The time for Isha today is at {time}."
-        }
-      }
     }
   }
 }
