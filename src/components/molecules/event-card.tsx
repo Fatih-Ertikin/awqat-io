@@ -30,19 +30,13 @@ export function EventCard(props: EventCardProps) {
       withBorder={isOngoing}
     >
       <CardSection ta="end" h="1.5rem">
-        {isOngoing && (
-          <Badge
-            variant="gradient"
-            gradient={{ from: "green", to: "teal", deg: 90 }}
-            size="lg"
-          >
-            {end &&
-              format.relativeTime(end, {
-                now,
-                style: "narrow",
-              })}
-          </Badge>
-        )}
+        <Badge
+          variant="gradient"
+          gradient={{ from: "red", to: "orange", deg: 90 }}
+          size="lg"
+        >
+          DEV DATA NOT REAL
+        </Badge>
       </CardSection>
       <Stack ta="center">
         <Title order={2} fw="normal">

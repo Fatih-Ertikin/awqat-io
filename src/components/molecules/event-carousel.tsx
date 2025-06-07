@@ -13,38 +13,38 @@ import dayjs from "dayjs";
 const EVENTS = [
   {
     title: "Salaat Al Fajr",
-    // fajr @ 3:49
-    start: dayjs().startOf("day").add(3, "hour").add(49, "minute").toDate(),
-    // shurooq @ 5:19
-    end: dayjs().startOf("day").add(5, "hour").add(19, "minute").toDate(),
+    // fajr @ 4:10
+    start: dayjs().startOf("day").add(4, "hour").add(10, "minute").toDate(),
+    // shurooq @ 4:50
+    end: dayjs().startOf("day").add(4, "hour").add(50, "minute").toDate(),
   },
   {
     title: "Salaat Al Dhuhr",
-    // dhuhr @ 13:38
-    start: dayjs().startOf("day").add(13, "hour").add(38, "minute").toDate(),
+    // dhuhr @ 13:50
+    start: dayjs().startOf("day").add(13, "hour").add(50, "minute").toDate(),
     // Asr @ 18:01
-    end: dayjs().startOf("day").add(18, "hour").add(1, "minute").toDate(),
+    end: dayjs().startOf("day").add(18, "hour").add(5, "minute").toDate(),
   },
   {
     title: "Salaat Al Asr",
-    // asr @ 18:01
-    start: dayjs().startOf("day").add(18, "hour").add(1, "minute").toDate(),
-    // end @ 19:30
-    end: dayjs().startOf("day").add(19, "hour").add(30, "minute").toDate(),
+    // asr @ 18:05
+    start: dayjs().startOf("day").add(18, "hour").add(5, "minute").toDate(),
+    // end @ 18:30
+    end: dayjs().startOf("day").add(18, "hour").add(30, "minute").toDate(),
   },
   {
     title: "Salaat Al Maghrib",
     // maghrib @ 22:03
     start: dayjs().startOf("day").add(22, "hour").add(3, "minute").toDate(),
-    // Isha @ 23:27
-    end: dayjs().startOf("day").add(23, "hour").add(27, "minute").toDate(),
+    // Isha @ 22:30
+    end: dayjs().startOf("day").add(22, "hour").add(30, "minute").toDate(),
   },
   {
     title: "Salaat Al Isha",
-    // isha @ 23:27
-    start: dayjs().startOf("day").add(23, "hour").add(27, "minute").toDate(),
-    // Midnight @ 00:31
-    end: dayjs().startOf("day").add(24, "hour").add(31, "minute").toDate(),
+    // isha @ 23:35
+    start: dayjs().startOf("day").add(23, "hour").add(35, "minute").toDate(),
+    // Midnight @ 00:15
+    end: dayjs().startOf("day").add(24, "hour").add(15, "minute").toDate(),
   },
 ];
 
