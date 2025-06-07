@@ -1,11 +1,11 @@
-import { Title, Grid, GridCol, Box, Divider } from "@mantine/core";
-import { getFormatter, getNow } from "next-intl/server";
+import { Title, Grid, GridCol, Divider } from "@mantine/core";
 import { redirect } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { matchSlugs } from "@/server/mongo/countries/countries.collection";
 import { getSlug } from "@/utils/slugs";
 import { EventCarousel } from "@/components/molecules/event-carousel";
 import { Clock } from "@/components/atoms/clock";
+import { getFormatter, getNow } from "next-intl/server";
 
 export default async function EventOverviewPage(props: {
   params: Promise<{
@@ -33,11 +33,11 @@ export default async function EventOverviewPage(props: {
     });
   }
 
-  const format = await getFormatter();
-  const now = await getNow();
-
   const { country, city } = match;
   const locale = params.locale;
+
+  const now = await getNow();
+  const format = await getFormatter();
 
   return (
     <Grid align="center">
@@ -45,6 +45,13 @@ export default async function EventOverviewPage(props: {
         span={{
           base: 12,
           sm: 4,
+        }}
+        order={{
+          base: 1,
+        }}
+        mb={{
+          base: "xs",
+          sm: 0,
         }}
         ta="start"
       >
@@ -54,19 +61,6 @@ export default async function EventOverviewPage(props: {
         <Title order={1} fw="normal">
           {country.names[locale] || country.fallbackName}
         </Title>
-        <Title order={2}>
-          {format.dateTime(now, {
-            timeZone: city.timeZone,
-            dateStyle: "long",
-            calendar: "islamic",
-          })}
-        </Title>
-        <Title order={3} fw="lighter">
-          {format.dateTime(now, {
-            timeZone: city.timeZone,
-            dateStyle: "medium",
-          })}
-        </Title>
       </GridCol>
 
       <GridCol
@@ -74,7 +68,9 @@ export default async function EventOverviewPage(props: {
           base: 12,
           sm: 4,
         }}
-        visibleFrom="sm"
+        order={{
+          base: 2,
+        }}
         ta="center"
       >
         <Clock />
@@ -85,15 +81,34 @@ export default async function EventOverviewPage(props: {
           base: 12,
           sm: 4,
         }}
-        visibleFrom="sm"
+        order={{
+          base: 4,
+          sm: 3,
+        }}
         ta="end"
       >
-        <Box>TODO: something here</Box>
+        <Title order={3} mb="md">
+          {format.dateTime(now, {
+            dateStyle: "long",
+            calendar: "islamic",
+          })}
+        </Title>
+        <Title order={4} fw="lighter">
+          {format.dateTime(now, {
+            dateStyle: "full",
+          })}
+        </Title>
       </GridCol>
 
-      <GridCol span={12}>
+      <GridCol
+        span={12}
+        order={{
+          base: 3,
+        }}
+      >
         <Divider my="lg" />
         <EventCarousel />
+        <Divider my="lg" hiddenFrom="sm" />
       </GridCol>
     </Grid>
   );

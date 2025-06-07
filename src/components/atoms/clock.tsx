@@ -11,10 +11,12 @@ export function Clock() {
   const format = useFormatter();
 
   return (
-    <Title order={1} fw="normal" suppressHydrationWarning>
-      {format.dateTime(now, {
-        timeStyle: "medium",
-      })}
-    </Title>
+    <time dateTime={now.toISOString()} suppressHydrationWarning>
+      <Title order={1} fw="normal" fz={82}>
+        {format.dateTime(now, {
+          timeStyle: "medium",
+        })}
+      </Title>
+    </time>
   );
 }

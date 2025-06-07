@@ -109,7 +109,7 @@ export function EventCarousel() {
       </Group>
       <Carousel
         getEmblaApi={setEmbla}
-        height={300}
+        height={220}
         slideSize={{ base: "100%", sm: "33%" }}
         slideGap={{ base: "lg", sm: "md" }}
         controlsOffset="x"
