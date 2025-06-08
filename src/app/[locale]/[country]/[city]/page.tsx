@@ -4,8 +4,7 @@ import { notFound } from "next/navigation";
 import { matchSlugs } from "@/server/mongo/countries/countries.collection";
 import { getSlug } from "@/utils/slugs";
 import { EventCarousel } from "@/components/molecules/event-carousel";
-import { Clock } from "@/components/atoms/clock";
-import { getFormatter, getNow } from "next-intl/server";
+import { FormattedDateTime } from "@/components/atoms/formatted-datetime";
 
 export default async function EventOverviewPage(props: {
   params: Promise<{
@@ -36,15 +35,12 @@ export default async function EventOverviewPage(props: {
   const { country, city } = match;
   const locale = params.locale;
 
-  const now = await getNow();
-  const format = await getFormatter();
-
   return (
     <Grid align="center">
       <GridCol
         span={{
           base: 12,
-          sm: 4,
+          sm: 3,
         }}
         order={{
           base: 1,
@@ -66,20 +62,30 @@ export default async function EventOverviewPage(props: {
       <GridCol
         span={{
           base: 12,
-          sm: 4,
+          sm: 6,
         }}
         order={{
           base: 2,
         }}
         ta="center"
       >
-        <Clock timeZone={city.timeZone} />
+        <FormattedDateTime
+          component={Title}
+          order={1}
+          fw="normal"
+          fz={82}
+          formatOptions={{
+            timeStyle: "medium",
+            timeZone: city.timeZone,
+          }}
+          updateInterval={1000} // Update every second
+        />
       </GridCol>
 
       <GridCol
         span={{
           base: 12,
-          sm: 4,
+          sm: 3,
         }}
         order={{
           base: 4,
@@ -87,19 +93,24 @@ export default async function EventOverviewPage(props: {
         }}
         ta="end"
       >
-        <Title order={3} mb="md">
-          {format.dateTime(now, {
+        <FormattedDateTime
+          component={Title}
+          order={3}
+          formatOptions={{
             dateStyle: "long",
             calendar: "islamic",
             timeZone: city.timeZone,
-          })}
-        </Title>
-        <Title order={4} fw="lighter">
-          {format.dateTime(now, {
+          }}
+        />
+        <FormattedDateTime
+          component={Title}
+          order={4}
+          fw="lighter"
+          formatOptions={{
             dateStyle: "full",
             timeZone: city.timeZone,
-          })}
-        </Title>
+          }}
+        />
       </GridCol>
 
       <GridCol
