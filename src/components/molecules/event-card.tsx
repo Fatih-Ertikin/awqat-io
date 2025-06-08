@@ -5,6 +5,7 @@ export type Event = {
   localName: string;
   start: Date;
   end?: Date;
+  timeZone?: string;
 };
 
 type EventCardProps = {
@@ -16,7 +17,7 @@ export function EventCard(props: EventCardProps) {
   const { event, now } = props;
   const format = useFormatter();
 
-  const { localName, start, end } = event;
+  const { localName, start, end, timeZone } = event;
 
   const isOngoing = now >= start && (end ? now <= end : true);
 
@@ -45,6 +46,7 @@ export function EventCard(props: EventCardProps) {
         <Title order={1}>
           {format.dateTime(start, {
             timeStyle: "short",
+            timeZone: timeZone,
           })}
         </Title>
         {end && (
@@ -52,6 +54,7 @@ export function EventCard(props: EventCardProps) {
             until{" "}
             {format.dateTime(end, {
               timeStyle: "short",
+              timeZone: timeZone,
             })}
           </Text>
         )}

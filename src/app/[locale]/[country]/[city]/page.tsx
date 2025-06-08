@@ -73,7 +73,7 @@ export default async function EventOverviewPage(props: {
         }}
         ta="center"
       >
-        <Clock />
+        <Clock timeZone={city.timeZone} />
       </GridCol>
 
       <GridCol
@@ -91,11 +91,13 @@ export default async function EventOverviewPage(props: {
           {format.dateTime(now, {
             dateStyle: "long",
             calendar: "islamic",
+            timeZone: city.timeZone,
           })}
         </Title>
         <Title order={4} fw="lighter">
           {format.dateTime(now, {
             dateStyle: "full",
+            timeZone: city.timeZone,
           })}
         </Title>
       </GridCol>
@@ -107,7 +109,7 @@ export default async function EventOverviewPage(props: {
         }}
       >
         <Divider my="lg" />
-        <EventCarousel />
+        <EventCarousel timeZone={city.timeZone} />
         <Divider my="lg" hiddenFrom="sm" />
       </GridCol>
     </Grid>

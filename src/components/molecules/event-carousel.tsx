@@ -48,7 +48,12 @@ const EVENTS = [
   },
 ];
 
-export function EventCarousel() {
+export type EventCarouselProps = {
+  timeZone?: string;
+};
+
+export function EventCarousel(props: EventCarouselProps) {
+  const { timeZone } = props;
   const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);
   const translate = useTranslations("Components.EventCarousel");
 
@@ -129,6 +134,7 @@ export function EventCarousel() {
                 localName: event.title,
                 start: event.start,
                 end: event.end,
+                timeZone: timeZone,
               }}
             />
           </CarouselSlide>
