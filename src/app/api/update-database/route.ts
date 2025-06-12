@@ -44,9 +44,7 @@ export async function GET() {
       minPopulation: 7500,
     });
 
-    console.debug(
-      `Found ${geoNames.unique.length} unique geo-names and ${geoNames.duplicates.length} duplicates for locale: ${locale}`
-    );
+    console.debug(`Found ${geoNames.length} geo-names locale: ${locale}`);
 
     // 4. for country generate a country record
     const record: Country = {
@@ -68,49 +66,24 @@ export async function GET() {
       },
       iso2: countryInfo.iso,
       iso3: countryInfo.iso3,
-      cities: [],
+      cities: geoNames.map(
+        (city): City => ({
+          names: {
+            en: city.name, // geoNames returns the city name in the English
+          },
+          fallbackName: city.name,
+          slug: getSlug(city.name),
+          location: {
+            type: "Point",
+            coordinates: [city.longitude, city.latitude], // GeoJSON format: [longitude, latitude]
+          },
+          timeZone: city.timeZone,
+          alternateNames: city.alternateNames
+            .split(",")
+            .map((name) => name.trim()),
+        })
+      ),
     };
-
-    // 4.1. for each unique geo-name, create a city record
-    const uniqueCities = geoNames.unique.map(
-      (city): City => ({
-        names: {
-          en: city.name, // geoNames returns the city name in English
-        },
-        fallbackName: city.name,
-        slug: getSlug(city.name),
-        location: {
-          type: "Point",
-          coordinates: [city.longitude, city.latitude], // GeoJSON format: [longitude, latitude]
-        },
-        timeZone: city.timeZone,
-        alternateNames: city.alternateNames
-          .split(",")
-          .map((name) => name.trim()),
-      })
-    );
-
-    // 4.2. for each duplicate geo-name, create a city record with a deduplication suffix
-    const duplicateCities = geoNames.duplicates.map(
-      (city): City => ({
-        names: {
-          en: city.name, // geoNames returns the city name in English
-        },
-        fallbackName: city.name,
-        slug: getSlug(city.name, city.admin1),
-        location: {
-          type: "Point",
-          coordinates: [city.longitude, city.latitude], // GeoJSON format: [longitude, latitude]
-        },
-        timeZone: city.timeZone,
-        alternateNames: city.alternateNames
-          .split(",")
-          .map((name) => name.trim()),
-      })
-    );
-
-    // 4.3. Combine unique and duplicate cities
-    record.cities = [...uniqueCities, ...duplicateCities];
 
     // 5. bulk insert the country record into the database
     await insertCountryData(record);

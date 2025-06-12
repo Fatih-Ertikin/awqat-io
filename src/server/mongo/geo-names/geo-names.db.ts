@@ -4,16 +4,6 @@ import { CountryInfo } from "./types/country-info.document";
 import { Admin1Code } from "./types/admin-1-codes.document";
 import { GeoName } from "./types/geo-name.document";
 
-export async function checkifCountryHasCollection(
-  iso2: string
-): Promise<boolean> {
-  const db = mongoClient.db("geo-names");
-  const collections = await db
-    .listCollections({ name: iso2.toUpperCase() })
-    .toArray();
-  return collections.length > 0;
-}
-
 export function findCountryInfo(iso2: string): Promise<CountryInfo | null> {
   const db = mongoClient.db("geo-names");
 
@@ -46,10 +36,7 @@ export async function findGeoNames(
     minPopulation?: number;
     featureClass?: string;
   }
-): Promise<{
-  unique: GeoName[];
-  duplicates: GeoName[];
-}> {
+): Promise<GeoName[]> {
   const db = mongoClient.db("geo-names");
   const collectionName = iso2.toUpperCase();
 
@@ -64,41 +51,11 @@ export async function findGeoNames(
     },
   };
 
-  const duplicates = await db
-    .collection<GeoName>(collectionName)
-    .aggregate<GeoName>([
-      matchStage,
-      {
-        $group: {
-          _id: { $toLower: "$name" }, // group by lowercased city name
-          count: { $sum: 1 },
-          docs: { $push: "$$ROOT" }, // collect all docs for that name
-        },
-      },
-      { $match: { count: { $gt: 1 } } }, // only duplicates
-      { $unwind: "$docs" },
-      { $replaceRoot: { newRoot: "$docs" } },
-    ])
+  const geoNamesCollection = db.collection<GeoName>(collectionName);
+
+  const geoNames = await geoNamesCollection
+    .aggregate<GeoName>([matchStage])
     .toArray();
 
-  const unique = await db
-    .collection<GeoName>(collectionName)
-    .aggregate<GeoName>([
-      matchStage,
-      {
-        $group: {
-          _id: { $toLower: "$name" },
-          count: { $sum: 1 },
-          docs: { $first: "$$ROOT" },
-        },
-      },
-      { $match: { count: 1 } }, // only unique
-      { $replaceRoot: { newRoot: "$docs" } },
-    ])
-    .toArray();
-
-  return {
-    unique,
-    duplicates,
-  };
+  return geoNames;
 }
