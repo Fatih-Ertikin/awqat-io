@@ -14,37 +14,39 @@ import { generateGeoSpatialCollection } from "@/server/mongo/geospatial/geospati
 import { getSlug } from "@/utils/slugs";
 import { ObjectId } from "mongodb";
 
+const COUNTRIES_TO_SEED = ["NL", "BE", "SA"];
+
 export async function GET() {
   console.debug("Starting geo-data generation...");
 
   await dropCountriesCollection();
 
   // 1. Loop through all supported locales (iso 2 codes)
-  for (const locale of SUPPORTED_APP_LOCALES) {
+  for (const iso2 of COUNTRIES_TO_SEED) {
     // 2. For each locale, query the country info
-    const countryInfo = await findCountryInfo(locale);
+    const countryInfo = await findCountryInfo(iso2);
 
     if (!countryInfo) {
-      console.warn(`No country info found for locale: ${locale}, skippping...`);
+      console.warn(`No country info found for locale: ${iso2}, skippping...`);
       continue;
     }
 
     console.debug(
-      `Processing locale: ${locale}, country: ${countryInfo.country}`
+      `Processing locale: ${iso2}, country: ${countryInfo.country}`
     );
 
     // 3. For each country, fetch the geoNames (cities, locations, etc) and the countries administrative (admin-1) divisions (states, provinces, etc)
-    const admin1Codes = await findAdmin1Codes(locale);
+    const admin1Codes = await findAdmin1Codes(iso2);
     console.debug(
-      `Found ${admin1Codes.length} admin-1 codes for locale: ${locale}`
+      `Found ${admin1Codes.length} admin-1 codes for locale: ${iso2}`
     );
 
-    const geoNames = await findGeoNames(locale, {
+    const geoNames = await findGeoNames(iso2, {
       featureClass: "P", // Geonames "P" feature class represents populated places (cities, towns, etc)
       minPopulation: 7500,
     });
 
-    console.debug(`Found ${geoNames.length} geo-names locale: ${locale}`);
+    console.debug(`Found ${geoNames.length} geo-names locale: ${iso2}`);
 
     // 4. for country generate a country record
     const record: Country = {
