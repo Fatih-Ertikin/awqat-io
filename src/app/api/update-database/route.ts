@@ -43,7 +43,7 @@ export async function GET() {
 
     const geoNames = await findGeoNames(iso2, {
       featureClass: "P", // Geonames "P" feature class represents populated places (cities, towns, etc)
-      minPopulation: 7500,
+      minPopulation: 25000,
     });
 
     console.debug(`Found ${geoNames.length} geo-names locale: ${iso2}`);
