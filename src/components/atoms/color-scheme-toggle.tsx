@@ -18,16 +18,8 @@ export function ColorSchemeToggle() {
       size="lg"
       withThumbIndicator={false}
       color="gray"
-      onLabel={
-        <IconSun size={18} stroke={2} color="var(--mantine-color-yellow-4)" />
-      }
-      offLabel={
-        <IconMoonStars
-          size={18}
-          stroke={2}
-          color="var(--mantine-color-indigo-6)"
-        />
-      }
+      onLabel={<IconSun size={18} stroke={2} />}
+      offLabel={<IconMoonStars size={18} stroke={2} />}
     />
   );
 }

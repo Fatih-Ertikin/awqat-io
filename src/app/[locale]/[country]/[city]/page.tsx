@@ -73,7 +73,8 @@ export default async function EventOverviewPage(props: {
           component={Title}
           order={1}
           fw="normal"
-          fz={82}
+          fz={72}
+          lh={1}
           formatOptions={{
             timeStyle: "medium",
             timeZone: city.timeZone,

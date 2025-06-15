@@ -11,7 +11,7 @@ import {
   mantineHtmlProps,
 } from "@mantine/core";
 import type { Metadata } from "next";
-import { MantineWithThemeProvider } from "@/components/atoms/mantine-with-theme-provider";
+import { MantineWithThemeProvider } from "@/components/providers/mantine-with-theme-provider";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
