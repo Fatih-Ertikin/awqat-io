@@ -13,12 +13,13 @@ import { ObjectId } from "mongodb";
 import { getTranslations } from "next-intl/server";
 import { revalidatePath } from "next/cache";
 
-export default async function MasajidPage(
+export default async function MasajidPage(props: {
   params: Promise<{
     locale: string;
-  }>
-) {
-  const { locale } = await params;
+  }>;
+}) {
+  const params = await props.params;
+  const { locale } = params;
   const translate = await getTranslations("Pages.MasajidPage");
 
   const handleCreateMasjid = async (values: MasjidCreateFormValues) => {
