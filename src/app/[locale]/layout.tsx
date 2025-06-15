@@ -17,6 +17,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Notifications } from "@mantine/notifications";
 import { AppHeader } from "@/components/molecules/app-header";
+import { AuthenticationProvider } from "@/components/providers/authentication-provider";
 
 export const metadata: Metadata = {
   title: "Awqat.io",
@@ -45,15 +46,17 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider>
           <MantineWithThemeProvider>
-            <Notifications />
-            <Container size="responsive">
-              <header>
-                <AppHeader />
-              </header>
-              <main>
-                <Box>{children}</Box>
-              </main>
-            </Container>
+            <AuthenticationProvider>
+              <Notifications />
+              <Container size="responsive">
+                <header>
+                  <AppHeader />
+                </header>
+                <main>
+                  <Box>{children}</Box>
+                </main>
+              </Container>
+            </AuthenticationProvider>
           </MantineWithThemeProvider>
         </NextIntlClientProvider>
       </body>

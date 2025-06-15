@@ -32,6 +32,19 @@
     "EventCarousel": {
       "next_btn_label": "Volgende",
       "prev_btn_label": "Terug"
+    },
+    "MasajidCrudTable": {
+      "heading_name": "Naam",
+      "heading_country": "Land",
+      "heading_street": "Adres",
+      "heading_actions": "Acties",
+      "create_drawer_title": "Voeg een nieuwe moskee toe",
+      "edit_drawer_title": "Bewerk moskee informatie",
+      "delete_modal_title": "Verwijder moskee",
+      "delete_modal_text": "Weet je zeker dat je deze moskee wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+      "delete_modal_button_label": "Verwijder moskee",
+      "delete_modal_cancel_button_label": "Annuleer",
+      "create_button_label": "Nieuwe moskee"
     }
   },
   "Pages": {
@@ -39,6 +52,10 @@
       "title": "Vind Islamitische gebeds & belangrijke tijden bij jou in de buurt",
       "divider_label": "of",
       "search_manually_title": "Zoek handmatig naar jouw locatie"
+    },
+    "MasajidPage": {
+      "title": "Beheer jouw moskeeën",
+      "description": "Bekijk hier een overzicht van de door jou beheerde moskeeën. Je kunt moskeeën toevoegen, bewerken of verwijderen om jouw gemeenschap op de hoogte te houden van gebedstijden en evenementen."
     }
   }
 }
